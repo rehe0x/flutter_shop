@@ -102,9 +102,13 @@ flutter:
       fonts:
         - asset: assets/fonts/zpix.ttf
 
-    - family: icons8
+    - family: iconfont1
       fonts:
-        - asset: assets/icons/icons8.ttf
+        - asset: assets/icons/iconfont_1.ttf
+
+    - family: iconfont2
+      fonts:
+        - asset: assets/icons/iconfont_2.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
