@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widget/search_field.dart';
+
 class Home extends StatelessWidget {
   String title;
   Home(this.title, {Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class Home extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            SearchField(),
             Text(title, style: TextStyle(
               fontSize: 30
             ),),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_shop/constant/custom_icons.dart';
+import 'package:flutter_shop/constant/theme.dart';
 import 'package:flutter_shop/page/home/home.dart';
 
 void main() {
@@ -27,9 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Shop',
-      theme: ThemeData(
-        fontFamily: 'PingFangSC-Regular'
-      ),
+      theme: MyThemeData.themeData,
       home: MyCupertinoTabScaffold(),
     );
   }
@@ -52,13 +51,14 @@ class MyCupertinoTabScaffold extends StatelessWidget {
     Home('购物车'),
     Home('账户'),
   ];
+  
   MyCupertinoTabScaffold({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
-          activeColor: Colors.blueAccent,
+          activeColor: Theme.of(context).primaryColor,
           items: tabs.map((tab) => BottomNavigationBarItem(
               icon: Icon(tab['icon']),
               label: tab['text'])).toList(),
