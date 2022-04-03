@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
-
 import '../constant/theme.dart';
 
 class SearchField extends StatelessWidget {
-  double? width;
-  double? height;
-  SearchField({ Key? key, this.width, this.height }) : super(key: key);
+  final double? width;
+  final double? height;
+  const SearchField({ Key? key, this.width, this.height }) : super(key: key);
 
-  static final OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+  static final OutlineInputBorder _outlineInputBorder = OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(33),
                                   borderSide: const BorderSide(
                                     color: MyThemeData.primarySubBackgroundColor,
+                                  ),
+                                );
+
+static final OutlineInputBorder _enabledOutlineInputBorder = OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(33),
+                                  borderSide: const BorderSide(
+                                    color: MyThemeData.primaryDisabledColor,
+                                  ),
+                                );
+
+static final OutlineInputBorder _focusedOutlineInputBorder = OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(33),
+                                  borderSide: const BorderSide(
+                                    color: MyThemeData.primaryColor,
                                   ),
                                 );
                                 
@@ -32,9 +45,9 @@ class SearchField extends StatelessWidget {
             color: MyThemeData.primaryDisabledColor
           ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-          border: outlineInputBorder,
-          enabledBorder: outlineInputBorder,
-          focusedBorder: outlineInputBorder,
+          border: _outlineInputBorder,
+          enabledBorder: _outlineInputBorder,
+          focusedBorder: _outlineInputBorder,
         ),
       ),
     );

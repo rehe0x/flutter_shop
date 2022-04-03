@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Shop',
       theme: MyThemeData.themeData,
-      home: MyCupertinoTabScaffold(),
+      home: _MyCupertinoTabScaffold(),
     );
   }
 }
 
 
-class MyCupertinoTabScaffold extends StatelessWidget {
-  final List tabs = [
+class _MyCupertinoTabScaffold extends StatelessWidget {
+  final List _tabs = [
     {'icon': CustomIcons.home, 'text': '首页'},
     {'icon': CustomIcons.service, 'text': '精选'},
     {'icon': CustomIcons.search, 'text': '搜索'},
@@ -44,27 +44,27 @@ class MyCupertinoTabScaffold extends StatelessWidget {
     {'icon': CustomIcons.people, 'text': '账户'}
   ];
 
-  final List<Widget> pages = [
-    Home('首页'),
-    Home('精选'),
-    Home('搜索'),
-    Home('购物车'),
-    Home('账户'),
+  final List<Widget> _pages = [
+    const Home(title: '首页',),
+    const Home(title: '精选'),
+    const Home(title: '搜索'),
+    const Home(title: '购物车'),
+    const Home(title: '账户'),
   ];
   
-  MyCupertinoTabScaffold({ Key? key }) : super(key: key);
+  _MyCupertinoTabScaffold({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
           activeColor: Theme.of(context).primaryColor,
-          items: tabs.map((tab) => BottomNavigationBarItem(
+          items: _tabs.map((tab) => BottomNavigationBarItem(
               icon: Icon(tab['icon']),
               label: tab['text'])).toList(),
         ),
         tabBuilder: (BuildContext context, int index) {
-          return pages[index];
+          return _pages[index];
         }
     );
   }
