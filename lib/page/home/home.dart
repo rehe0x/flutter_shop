@@ -26,7 +26,7 @@ class _MyCustomScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      // physics: ,
+      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverAppBar(
           expandedHeight: 100,
