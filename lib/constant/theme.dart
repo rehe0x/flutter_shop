@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class MyThemeData {
+class AppTheme {
   // 主题颜色 tabbar 按钮等颜色
   static const Color primaryColor = Color.fromARGB(255, 12, 65, 135);
 
@@ -24,6 +24,10 @@ class MyThemeData {
   static ThemeData themeData = ThemeData(
     fontFamily: 'PingFangSC-Regular',
     primaryColor: primaryColor,
+    // 点击icon颜色
+    colorScheme: ThemeData().colorScheme.copyWith(
+      primary: primaryColor,
+    ),
     primaryTextTheme: const TextTheme(
       subtitle1: TextStyle(
         color: primaryTextColor,
@@ -44,4 +48,20 @@ class MyThemeData {
     )
     
   );
+}
+
+class AppStyle {
+  static const TextStyle title1Style = TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 24, color: AppTheme.primaryTextColor);
+  static const TextStyle title2Style = TextStyle(fontFamily: 'PingFangSC-Regular',fontSize: 18, color: AppTheme.primaryTextColor);
+  static const TextStyle title3Style = TextStyle(fontFamily: 'PingFangSC-Medium',fontSize: 14, color: AppTheme.primaryTextColor);
+  
+  static const TextStyle titleSub1Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 18, color: AppTheme.primarySubTextColor);
+  static const TextStyle titleSub2Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 14, color: AppTheme.primarySubTextColor);
+  static const TextStyle titleSub3Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 12, color: AppTheme.primarySubTextColor);
+
+  static const TextStyle textButton1Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 18, color: AppTheme.primaryColor);
+  static const TextStyle textButton2Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 16, color: AppTheme.primaryColor);
+  static const TextStyle textButton3Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 14, color: AppTheme.primaryColor);
+
+
 }

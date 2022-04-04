@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/constant/custom_style.dart';
+import 'package:flutter_shop/constant/custom_icons.dart';
 
+import '../../constant/theme.dart';
 import '../../widget/search_field.dart';
 
 class Home extends StatelessWidget {
@@ -24,23 +26,35 @@ class _MyCustomScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      // physics: ,
       slivers: [
         SliverAppBar(
           expandedHeight: 100,
           floating: true,
           pinned: true,
           snap: true,
-          stretch: true,
+          // 固定flexibleSpace
+          stretch: false,
           flexibleSpace: FlexibleSpaceBar(
             expandedTitleScale: 1,
-            title: const SearchField(height: 40,),
+            title: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Expanded(
+                  child: SearchField(height: 40,),
+                ),
+                SizedBox(width: 5,),
+                Icon(CustomIcons.cart, size: 32,)
+              ],
+            ),
+            // title: const SearchField(height: 40,),
             centerTitle: true,
-            titlePadding: const EdgeInsets.only(bottom: 2),
+            titlePadding: const EdgeInsets.only(bottom: 2, left: 15, right: 15),
             background: SafeArea(
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: CustomStyle.title1Style
+                style: AppStyle.title1Style
               ),
             ),
           ),
@@ -74,9 +88,12 @@ class _MyCustomScrollView extends StatelessWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('精选商品', style: CustomStyle.title1Style),
-                    Text('更多', style: CustomStyle.title2Style)
+                  children: [
+                    const Text('精选商品', style: AppStyle.title1Style),
+                    CupertinoButton(
+                      child: const Text('更多', style: AppStyle.textButton3Style,),
+                      onPressed: (){},
+                    )
                   ],
                 ),
                 // Text('内容')
