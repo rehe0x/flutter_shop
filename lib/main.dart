@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_shop/constant/custom_icons.dart';
 import 'package:flutter_shop/constant/theme.dart';
 import 'package:flutter_shop/page/home/home.dart';
+import 'package:flutter_shop/page/search/search.dart';
 
 void main() {
   // if (Platform.isAndroid) {
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
 
 /// 使用ios风格底部tab脚手架
 class _MyCupertinoTabScaffold extends StatelessWidget {
-  final List _tabs = [
+  static final  List _tabs = [
     {'icon': CustomIcons.home, 'text': '首页'},
     {'icon': CustomIcons.service, 'text': '精选'},
     {'icon': CustomIcons.search, 'text': '搜索'},
@@ -45,19 +46,20 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
   ];
 
   /// 底部菜单对应页面
-  final List<Widget> _pages = [
+  static final List<Widget> _pages = [
     const Home(title: '首页',),
     const Home(title: '精选'),
-    const Home(title: '搜索'),
+    const Search(),
     const Home(title: '购物车'),
     const Home(title: '账户'),
   ];
   
   _MyCupertinoTabScaffold({ Key? key }) : super(key: key);
-
+  CupertinoTabController cupertinoTabController = CupertinoTabController();
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
+        controller: cupertinoTabController,
         tabBar: CupertinoTabBar(
           activeColor: Theme.of(context).primaryColor,
           items: _tabs.map((tab) => BottomNavigationBarItem(
@@ -65,6 +67,7 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
               label: tab['text'])).toList(),
         ),
         tabBuilder: (BuildContext context, int index) {
+          // 
           return _pages[index];
         }
     );

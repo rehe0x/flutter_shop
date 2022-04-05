@@ -50,7 +50,6 @@ class _SearchFieldState extends State<SearchField> {
 
   _focusNodeAddListener(){
     _focusNode.addListener(() {
-      print(_textEditingController.text);
       setState(() {
         _focus = _focusNode.hasFocus;
       });

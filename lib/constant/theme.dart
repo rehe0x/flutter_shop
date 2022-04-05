@@ -44,6 +44,9 @@ class AppTheme {
       titleTextStyle: TextStyle(
         color: primaryTextColor,
         fontSize: 24,
+      ),
+      iconTheme: IconThemeData(
+        color: primaryIconColor
       )
     )
     

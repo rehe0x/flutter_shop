@@ -27,7 +27,10 @@ class _MyCustomScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
+      // BouncingScrollPhysics ios风格  AlwaysScrollableScrollPhysics 不管内容是否超出屏幕
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
       slivers: [
         SliverAppBar(
           expandedHeight: 100,
