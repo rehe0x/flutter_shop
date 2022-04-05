@@ -11,7 +11,9 @@ class SearchField extends StatefulWidget {
   final double? height;
   final bool readOnly;
   final bool autofocus;
-  const SearchField({ Key? key, this.width, this.height, this.readOnly = false, this.autofocus = false}) : super(key: key);
+  const SearchField({Key? key, this.width, this.height,
+   this.readOnly = false, this.autofocus = false,
+   }) : super(key: key);
 
   static final OutlineInputBorder _outlineInputBorder = OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(33),
@@ -26,9 +28,38 @@ class SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<SearchField> {
-  final FocusNode _focusNode = FocusNode();
   final TextEditingController _textEditingController = TextEditingController();
+  late final NavigationBarProvider navigationBarProvider;
+  late final FocusNode _focusNode;
   bool _focus = false;
+
+  @override
+  void initState (){
+    super.initState();
+    //  获取Provider 类
+    navigationBarProvider = Provider.of<NavigationBarProvider>(context, listen: false);
+    // 搜索页键盘事件用Provider FocusNode 为了从首页点过去每次都获取焦点
+    _focusNode = widget.autofocus ? navigationBarProvider.focusNode : FocusNode();
+    _focusNodeAddListener();
+  }
+
+  _focusNodeAddListener(){
+    _focusNode.addListener(() {
+      // 点击首页搜索框切换到搜索页
+      if (_focusNode.hasFocus && navigationBarProvider.cupertinoTabController.index != 2) {
+        // 关闭首页键盘焦点
+        unFocusFunction();
+        // 打开搜索页焦点
+        navigationBarProvider.focusNode.requestFocus();
+        // 跳转搜索页
+        navigationBarProvider.updateIndex(2);
+      }
+      setState(() {
+        _focus = _focusNode.hasFocus;
+      });
+    });
+  }
+
 
   //获取焦点
   void getFocusFunction(BuildContext context){
@@ -44,27 +75,6 @@ class _SearchFieldState extends State<SearchField> {
   void hideKeyBoard(){
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
-  @override
-  void initState (){
-    print('cesssssssss');
-    super.initState();
-    _focusNodeAddListener();
-
-  }
-
-  _focusNodeAddListener(){
-    _focusNode.addListener(() {
-      NavigationBarProvider navigationBarProvider = Provider.of<NavigationBarProvider>(context, listen: false);
-      if (_focusNode.hasFocus && navigationBarProvider.cupertinoTabController.index != 2) {
-        unFocusFunction();
-        navigationBarProvider.updateIndex(2);
-      }
-      setState(() {
-        _focus = _focusNode.hasFocus;
-      });
-    });
-  }
-
   @override
   void dispose() {
     super.dispose();

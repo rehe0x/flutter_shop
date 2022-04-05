@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Shop',
       theme: AppTheme.themeData,
-      home: _MyCupertinoTabScaffold(),
+      home: const _MyCupertinoTabScaffold(),
     );
   }
 }
@@ -66,7 +66,7 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CupertinoTabController cupertinoTabController = Provider.of<NavigationBarProvider>(context, listen: false).cupertinoTabController;
+    final CupertinoTabController cupertinoTabController = Provider.of<NavigationBarProvider>(context, listen: false).cupertinoTabController;
 
     return CupertinoTabScaffold(
         controller: cupertinoTabController,
@@ -76,7 +76,7 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
               icon: Icon(tab['icon']),
               label: tab['text'])).toList(),
           onTap: (int index){
-            print(cupertinoTabController);
+            // print(cupertinoTabController);
           },
         ),
         tabBuilder: (BuildContext context, int index) {
@@ -84,12 +84,5 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
           return _pages[index];
         }
     );
-
-    return Consumer<NavigationBarProvider>(
-      builder: (context, navBar, chld) {
-
-      },
-    );
-
   }
 }
