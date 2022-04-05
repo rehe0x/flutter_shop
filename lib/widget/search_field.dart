@@ -2,14 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_shop/constant/custom_icons.dart';
+import 'package:provider/provider.dart';
 import '../constant/theme.dart';
+import '../provider/navigation_bar.dart';
 
 class SearchField extends StatefulWidget {
   final double? width;
   final double? height;
-  
-
-  const SearchField({ Key? key, this.width, this.height }) : super(key: key);
+  final bool readOnly;
+  final bool autofocus;
+  const SearchField({ Key? key, this.width, this.height, this.readOnly = false, this.autofocus = false}) : super(key: key);
 
   static final OutlineInputBorder _outlineInputBorder = OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(33),
@@ -44,12 +46,19 @@ class _SearchFieldState extends State<SearchField> {
   }
   @override
   void initState (){
+    print('cesssssssss');
     super.initState();
     _focusNodeAddListener();
+
   }
 
   _focusNodeAddListener(){
     _focusNode.addListener(() {
+      NavigationBarProvider navigationBarProvider = Provider.of<NavigationBarProvider>(context, listen: false);
+      if (_focusNode.hasFocus && navigationBarProvider.cupertinoTabController.index != 2) {
+        unFocusFunction();
+        navigationBarProvider.updateIndex(2);
+      }
       setState(() {
         _focus = _focusNode.hasFocus;
       });
@@ -90,6 +99,9 @@ class _SearchFieldState extends State<SearchField> {
               style: AppStyle.title3Style,
               cursorColor: AppTheme.primaryColor,
               textAlignVertical: TextAlignVertical.bottom,
+              readOnly: widget.readOnly,
+              autofocus: widget.autofocus,
+              // showCursor: true,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: AppTheme.primarySubBackgroundColor,

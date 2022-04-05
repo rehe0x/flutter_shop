@@ -41,7 +41,7 @@ class _MyCustomScrollView extends StatelessWidget {
           stretch: false,
           flexibleSpace: FlexibleSpaceBar(
             expandedTitleScale: 1,
-            title: const SearchField(height: 40,),
+            title: const SearchField(height: 40, readOnly: true,),
             // title: const SearchField(height: 40,),
             centerTitle: true,
             titlePadding: const EdgeInsets.only(bottom: 2, left: 15, right: 15),

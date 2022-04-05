@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +5,8 @@ import 'package:flutter_shop/constant/custom_icons.dart';
 import 'package:flutter_shop/constant/theme.dart';
 import 'package:flutter_shop/page/home/home.dart';
 import 'package:flutter_shop/page/search/search.dart';
+import 'package:flutter_shop/provider/navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   // if (Platform.isAndroid) {
@@ -17,7 +18,14 @@ void main() {
   //     );
   //     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   // }
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => NavigationBarProvider())
+      ],
+      child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -54,10 +62,12 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
     const Home(title: '账户'),
   ];
   
-  _MyCupertinoTabScaffold({ Key? key }) : super(key: key);
-  CupertinoTabController cupertinoTabController = CupertinoTabController();
+  const _MyCupertinoTabScaffold({ Key? key }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    CupertinoTabController cupertinoTabController = Provider.of<NavigationBarProvider>(context, listen: false).cupertinoTabController;
+
     return CupertinoTabScaffold(
         controller: cupertinoTabController,
         tabBar: CupertinoTabBar(
@@ -65,11 +75,21 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
           items: _tabs.map((tab) => BottomNavigationBarItem(
               icon: Icon(tab['icon']),
               label: tab['text'])).toList(),
+          onTap: (int index){
+            print(cupertinoTabController);
+          },
         ),
         tabBuilder: (BuildContext context, int index) {
-          // 
+          //
           return _pages[index];
         }
     );
+
+    return Consumer<NavigationBarProvider>(
+      builder: (context, navBar, chld) {
+
+      },
+    );
+
   }
 }

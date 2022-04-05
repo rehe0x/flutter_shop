@@ -10,7 +10,7 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const SearchField(height: 40,),
+        title: const SearchField(height: 40, autofocus: true),
       ),
       body: const _MyCustomScrollView()
        
