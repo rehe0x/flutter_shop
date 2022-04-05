@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
+/// 使用ios风格底部tab脚手架
 class _MyCupertinoTabScaffold extends StatelessWidget {
   final List _tabs = [
     {'icon': CustomIcons.home, 'text': '首页'},
@@ -44,6 +44,7 @@ class _MyCupertinoTabScaffold extends StatelessWidget {
     {'icon': CustomIcons.people, 'text': '账户'}
   ];
 
+  /// 底部菜单对应页面
   final List<Widget> _pages = [
     const Home(title: '首页',),
     const Home(title: '精选'),

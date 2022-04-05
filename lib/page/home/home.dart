@@ -5,6 +5,7 @@ import 'package:flutter_shop/constant/custom_icons.dart';
 import '../../constant/theme.dart';
 import '../../widget/search_field.dart';
 
+/// 首页
 class Home extends StatelessWidget {
   final String title;
   const Home({required this.title, Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class Home extends StatelessWidget {
   }
 }
 
-
+/// 自定义滚动效果，搜素框吸顶效果
 class _MyCustomScrollView extends StatelessWidget {
   final String title;
   const _MyCustomScrollView({required this.title, Key? key }) : super(key: key);
@@ -37,16 +38,7 @@ class _MyCustomScrollView extends StatelessWidget {
           stretch: false,
           flexibleSpace: FlexibleSpaceBar(
             expandedTitleScale: 1,
-            title: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Expanded(
-                  child: SearchField(height: 40,),
-                ),
-                SizedBox(width: 5,),
-                Icon(CustomIcons.cart, size: 32,)
-              ],
-            ),
+            title: const SearchField(height: 40,),
             // title: const SearchField(height: 40,),
             centerTitle: true,
             titlePadding: const EdgeInsets.only(bottom: 2, left: 15, right: 15),

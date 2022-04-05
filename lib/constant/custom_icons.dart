@@ -19,7 +19,7 @@ class CustomIcons {
   static const IconData peopleFill = IconData(0xe732, fontFamily: 'iconfont1');
 
   static const IconData close = IconData(0xe6f3, fontFamily: 'iconfont1');
-
+  // 扫一扫
   static const IconData scan = IconData(0xe751, fontFamily: 'iconfont1');
 
 }
