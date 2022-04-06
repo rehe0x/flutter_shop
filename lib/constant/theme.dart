@@ -56,15 +56,23 @@ class AppTheme {
 class AppStyle {
   static const TextStyle title1Style = TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 24, color: AppTheme.primaryTextColor);
   static const TextStyle title2Style = TextStyle(fontFamily: 'PingFangSC-Regular',fontSize: 18, color: AppTheme.primaryTextColor);
-  static const TextStyle title3Style = TextStyle(fontFamily: 'PingFangSC-Medium',fontSize: 14, color: AppTheme.primaryTextColor);
-  
+  static const TextStyle title3Style = TextStyle(fontFamily: 'PingFangSC-Regular',fontSize: 14, color: AppTheme.primaryTextColor);
+    
+  static const TextStyle title3MediumStyle = TextStyle(fontFamily: 'PingFangSC-Medium',fontSize: 14, color: AppTheme.primaryTextColor);  
+
+  static const TextStyle title1LightStyle = TextStyle(fontFamily: 'PingFangSC-Light',fontSize: 18, color: AppTheme.primaryTextColor);
+  static const TextStyle title2LightStyle = TextStyle(fontFamily: 'PingFangSC-Light',fontSize: 14, color: AppTheme.primaryTextColor);
+  static const TextStyle title3LightStyle = TextStyle(fontFamily: 'PingFangSC-Light',fontSize: 12, color: AppTheme.primaryTextColor);
+
   static const TextStyle titleSub1Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 18, color: AppTheme.primarySubTextColor);
   static const TextStyle titleSub2Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 14, color: AppTheme.primarySubTextColor);
   static const TextStyle titleSub3Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 12, color: AppTheme.primarySubTextColor);
 
-  static const TextStyle textButton1Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 18, color: AppTheme.primaryColor);
-  static const TextStyle textButton2Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 16, color: AppTheme.primaryColor);
-  static const TextStyle textButton3Style = TextStyle(fontFamily: 'PingFangSC-Thin',fontSize: 14, color: AppTheme.primaryColor);
+
+
+  static const TextStyle textButton1Style = TextStyle(fontFamily: 'PingFangSC-Regular',fontSize: 18, color: AppTheme.primaryColor);
+  static const TextStyle textButton2Style = TextStyle(fontFamily: 'PingFangSC-Regular',fontSize: 16, color: AppTheme.primaryColor);
+  static const TextStyle textButton3Style = TextStyle(fontFamily: 'PingFangSC-Regular',fontSize: 14, color: AppTheme.primaryColor);
 
 
 }

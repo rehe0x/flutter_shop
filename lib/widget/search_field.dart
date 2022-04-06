@@ -106,11 +106,14 @@ class _SearchFieldState extends State<SearchField> {
             child: TextField(
               focusNode: _focusNode,
               controller: _textEditingController,
-              style: AppStyle.title3Style,
+              style: AppStyle.title3MediumStyle,
               cursorColor: AppTheme.primaryColor,
               textAlignVertical: TextAlignVertical.bottom,
+              // 不弹出键盘
               readOnly: widget.readOnly,
+              // 默认获取焦点
               autofocus: widget.autofocus,
+              // 显示焦点
               // showCursor: true,
               decoration: InputDecoration(
                 filled: true,

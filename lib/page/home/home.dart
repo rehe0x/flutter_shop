@@ -4,6 +4,7 @@ import 'package:flutter_shop/constant/custom_icons.dart';
 
 import '../../constant/theme.dart';
 import '../../widget/search_field.dart';
+import '../../page/home/widget.dart' as home_widget;
 
 /// 首页
 class Home extends StatelessWidget {
@@ -33,6 +34,7 @@ class _MyCustomScrollView extends StatelessWidget {
       ),
       slivers: [
         SliverAppBar(
+          // bar 高度
           expandedHeight: 100,
           floating: true,
           pinned: true,
@@ -42,7 +44,6 @@ class _MyCustomScrollView extends StatelessWidget {
           flexibleSpace: FlexibleSpaceBar(
             expandedTitleScale: 1,
             title: const SearchField(height: 40, readOnly: true,),
-            // title: const SearchField(height: 40,),
             centerTitle: true,
             titlePadding: const EdgeInsets.only(bottom: 2, left: 15, right: 15),
             background: SafeArea(
@@ -54,47 +55,14 @@ class _MyCustomScrollView extends StatelessWidget {
             ),
           ),
         ),
-        SliverPadding(
-          padding: const EdgeInsets.only(top: 15),
+        const SliverPadding(
+          padding: EdgeInsets.only(top: 15),
           sliver: SliverToBoxAdapter(
-            child: SizedBox(
-              height: 200,
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: PageView.builder(
-                      itemCount: 5,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.cover,);
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ),
+            child: home_widget.Banner(),
           ),
         ),
-        
-        SliverPadding(
-          padding: const EdgeInsets.all(15),
-          sliver: SliverToBoxAdapter(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('精选商品', style: AppStyle.title1Style),
-                    CupertinoButton(
-                      child: const Text('更多', style: AppStyle.textButton3Style,),
-                      onPressed: (){},
-                    )
-                  ],
-                ),
-                // Text('内容')
-              ],
-            )
-          ),
+        const SliverToBoxAdapter(
+          child: home_widget.GroupHorizontalList(title: '每日特价',)
         ),
         
         SliverPadding(
