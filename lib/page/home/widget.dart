@@ -125,8 +125,8 @@ class MenuList extends StatelessWidget {
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,//按2列展示
-          mainAxisSpacing: 5,//主轴边距
-          crossAxisSpacing: 10,//纵轴边距
+          mainAxisSpacing: 0,//主轴边距
+          crossAxisSpacing: 20,//纵轴边距
           childAspectRatio: 0.8,//宽高比3:1
         ),
 
@@ -137,20 +137,26 @@ class MenuList extends StatelessWidget {
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  Container(
-                   width: 115,
-                   height: 115,
-                  decoration: BoxDecoration(
-                    color: Colors.blue[100*(index+1%20)],
-                    borderRadius: BorderRadius.circular(55)
-                    ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(150),
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) { 
+                        return Container(
+                          height: constraints.biggest.width,
+                          decoration: BoxDecoration(
+                            color: Colors.blue[100*(index+1%20)],
+                          ),
+                          child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.contain,)
+                        );
+                     },
+                    )
                   ),
                   const Text('菜单呢'),
                 ],
               ),
             );
           },
-          childCount: 6,
+          childCount: 3,
         ),
       ),
     );

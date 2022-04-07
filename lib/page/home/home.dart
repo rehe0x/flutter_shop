@@ -65,14 +65,14 @@ class _MyCustomScrollView extends StatelessWidget {
             child: home_widget.Banner(),
           ),
         ),
-      
+        const home_widget.MenuList(),
         const SliverToBoxAdapter(
           child: home_widget.GroupHorizontalTitle(title: '日常',),
         ),
         const SliverToBoxAdapter(
           child: home_widget.GroupHorizontalList()
         ),
-        const home_widget.MenuList(),
+        
         const SliverToBoxAdapter(
           child: home_widget.ActivityGroup()
         ),
