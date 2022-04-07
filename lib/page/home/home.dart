@@ -34,11 +34,13 @@ class _MyCustomScrollView extends StatelessWidget {
       ),
       slivers: [
         SliverAppBar(
-          // bar 高度
-          expandedHeight: 100,
+          // appbar高度
+          toolbarHeight: 40,
+          // 总高度 
+          expandedHeight: 85,
           floating: true,
           pinned: true,
-          snap: true,
+          // snap: true,
           // 固定flexibleSpace
           stretch: false,
           flexibleSpace: FlexibleSpaceBar(
@@ -47,6 +49,8 @@ class _MyCustomScrollView extends StatelessWidget {
             centerTitle: true,
             titlePadding: const EdgeInsets.only(bottom: 2, left: 15, right: 15),
             background: SafeArea(
+              top: false,
+              minimum: const EdgeInsets.only(top: 42),
               child: Text(
                 title,
                 textAlign: TextAlign.center,
@@ -56,17 +60,27 @@ class _MyCustomScrollView extends StatelessWidget {
           ),
         ),
         const SliverPadding(
-          padding: EdgeInsets.only(top: 15),
+          padding: EdgeInsets.only(top: 10),
           sliver: SliverToBoxAdapter(
             child: home_widget.Banner(),
           ),
         ),
+      
         const SliverToBoxAdapter(
-          child: home_widget.GroupHorizontalList(title: '每日特价',)
+          child: home_widget.GroupHorizontalTitle(title: '日常',),
         ),
-        
+        const SliverToBoxAdapter(
+          child: home_widget.GroupHorizontalList()
+        ),
+        const home_widget.MenuList(),
+        const SliverToBoxAdapter(
+          child: home_widget.ActivityGroup()
+        ),
+        const SliverToBoxAdapter(
+          child: home_widget.ActivityGroup()
+        ),
         SliverPadding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(50),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,//按2列展示
