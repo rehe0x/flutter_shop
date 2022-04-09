@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_shop/common/common.dart';
+import 'package:flutter_shop/routes/navigator2.dart';
 
 import '../../constant/theme.dart';
 
@@ -46,7 +47,9 @@ class GroupHorizontalTitle extends StatelessWidget {
             padding: const EdgeInsets.all(0),
             minSize: 0,
             child: const Text('查看全部', style: AppStyle.textButton3Style,),
-            onPressed: (){},
+            onPressed: (){
+              AppRouterDelegate.of(context).push(name: '/test1');
+            },
           )
         ],
       ),
