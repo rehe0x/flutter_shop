@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_shop/common/common.dart';
-import 'package:flutter_shop/routes/navigator2.dart';
 
 import '../../constant/theme.dart';
+import '../../routes/delegate.dart';
 
 class Banner extends StatelessWidget {
   const Banner({ Key? key }) : super(key: key);
