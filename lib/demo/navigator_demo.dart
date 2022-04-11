@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/page/search/search.dart';
-import 'package:flutter_shop/routes/page.dart';
-import 'package:flutter_shop/routes/routes_stack.dart';
 
 import '../constant/theme.dart';
 

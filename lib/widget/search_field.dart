@@ -50,7 +50,7 @@ class _SearchFieldState extends State<SearchField> {
         // 关闭首页键盘焦点
         unFocusFunction();
         // 打开搜索页焦点
-        navigationBarProvider.focusNode.requestFocus();
+        navigationBarProvider.updateRequestFocus(true);
         // 跳转搜索页
         navigationBarProvider.updateIndex(2);
       }

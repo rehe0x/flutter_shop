@@ -7,7 +7,6 @@ import '../../provider/navigation_bar.dart';
 import '../../widget/search_field.dart';
 class Search extends StatelessWidget {
   const Search({ Key? key }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +27,13 @@ class _SearchRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Navigator(
       initialRoute: 'search',
+      // 键盘事件
+      requestFocus: false,
       onGenerateRoute: (RouteSettings settings) {
         WidgetBuilder builder;
         switch (settings.name) {
           case 'search':
-            builder = (BuildContext context) =>  SearchBody();
+            builder = (BuildContext context) =>  const SearchBody();
             break;
           case 'goods_item':
             builder = (BuildContext context) => const SearchGoodsBody();

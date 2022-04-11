@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'navigator_demo.dart';
-import 'navigator_demo.dart';
 
 class PageDemo extends StatefulWidget {
   const PageDemo({ Key? key }) : super(key: key);

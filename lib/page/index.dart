@@ -41,11 +41,14 @@ class AppIndex extends StatelessWidget {
               icon: Icon(tab['icon']),
               label: tab['text'])).toList(),
           onTap: (int index){
-            // print(cupertinoTabController);
+            // 默认打开搜索页焦点
+            if (index == 2) {
+              Provider.of<NavigationBarProvider>(context, listen: false).updateRequestFocus(true);
+            }
           },
         ),
         tabBuilder: (BuildContext context, int index) {
-          //
+          debugPrint('tabBuilder index: $index');
           return _pages[index];
         }
     );

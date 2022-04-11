@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class NavigationBarProvider extends ChangeNotifier {
   // 首页tabbar切换需要
@@ -9,7 +8,15 @@ class NavigationBarProvider extends ChangeNotifier {
 
   void updateIndex(int index){
     cupertinoTabController.index = index;
-    notifyListeners();
+    // notifyListeners();
+  }
+
+  void updateRequestFocus(bool hasFocus){
+    if (hasFocus && !focusNode.hasFocus) {
+      focusNode.requestFocus();
+    } else if (!hasFocus && focusNode.hasFocus){
+      focusNode.unfocus();
+    }
   }
 
   @override
