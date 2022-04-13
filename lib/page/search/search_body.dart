@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/provider/navigation_bar.dart';
+import 'package:flutter_shop/theme/themes.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant/theme.dart';
@@ -11,14 +12,13 @@ class SearchBody extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) { 
-    return Scaffold(
-      body: ListView(
+    return ListView(
           // padding: const EdgeInsets.all(10),
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics()
           ),
           children: [
-            const Text('历史搜索', style: AppStyle.title1Style,),
+            Text('历史搜索', style: AppThemes.of(context).textTheme.titleLarge,),
             GridView(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
@@ -37,7 +37,7 @@ class SearchBody extends StatelessWidget {
                 Icon(Icons.free_breakfast)
               ],
             ),
-            const Text('热搜商品', style: AppStyle.title1Style,),
+            Text('热搜商品', style: AppThemes.of(context).textTheme.titleLarge,),
             GridView(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
@@ -65,7 +65,6 @@ class SearchBody extends StatelessWidget {
               ],
             )
           ],
-        ),
-    );
+        );
   }
 }

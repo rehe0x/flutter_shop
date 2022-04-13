@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/constant/custom_icons.dart';
+import 'package:flutter_shop/theme/themes.dart';
 
 import '../../constant/theme.dart';
 import '../../widget/search_field.dart';
@@ -14,6 +15,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
       body: _MyCustomScrollView(title: title)
     );
 
@@ -34,6 +36,8 @@ class _MyCustomScrollView extends StatelessWidget {
       ),
       slivers: [
         SliverAppBar(
+          backgroundColor: AppThemes.of(context).primaryBackgroundColor,
+          elevation: 0.0,
           // appbar高度
           toolbarHeight: 40,
           // 总高度 
@@ -54,7 +58,7 @@ class _MyCustomScrollView extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: AppStyle.title1Style
+                style: AppThemes.of(context).textTheme.titleLarge
               ),
             ),
           ),

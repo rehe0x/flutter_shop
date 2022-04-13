@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/common/common.dart';
+import 'package:flutter_shop/theme/themes.dart';
 
 import '../../constant/theme.dart';
 import '../../routes/delegate.dart';
@@ -41,13 +42,21 @@ class GroupHorizontalTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(title, style: AppStyle.title1Style),
+          Text(title, style: AppThemes.of(context).textTheme.titleLarge),
           CupertinoButton(
             padding: const EdgeInsets.all(0),
             minSize: 0,
-            child: const Text('查看全部', style: AppStyle.textButton3Style,),
+            child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
             onPressed: (){
               AppRouterDelegate.of(context).push(name: '/test1');
+            },
+          ),
+          CupertinoButton(
+            padding: const EdgeInsets.all(0),
+            minSize: 0,
+            child: Text('切换主题', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
+            onPressed: (){
+              AppThemes.change(context, ThemeEnum.dark);
             },
           )
         ],
@@ -95,21 +104,21 @@ class GoodsItem extends StatelessWidget {
             height: 150,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: AppTheme.primarySubBackgroundColor,
+              color: AppThemes.of(context).scaffoldAccentColor,
               borderRadius: BorderRadius.circular(14)
             ),
             child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.cover,),
           ),
-          const Text(
+          Text(
             'sdfjsl放松的方式的见风使舵老师',
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: AppStyle.title3LightStyle,
+            style: AppThemes.of(context).textTheme.titleSmall,
           ),
-          const Text(
+          Text(
             '4343.54元',
             maxLines: 1,
-            style: AppStyle.title3MediumStyle,
+            style: AppThemes.of(context).textTheme.titleSmall,
           )
         ],
       ),
@@ -183,9 +192,9 @@ class ActivityGroup extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text('来看一看', style: AppStyle.title1Style,),
-                  Text('买不来？', style: AppStyle.title2Style,)
+                children: [
+                  Text('来看一看', style: AppThemes.of(context).textTheme.titleLarge,),
+                  Text('买不来？', style: AppThemes.of(context).textTheme.titleMedium,)
                 ],
               ),
             )

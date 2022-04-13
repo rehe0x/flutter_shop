@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/constant/theme.dart';
+import 'package:flutter_shop/provider/app_provider.dart';
+// import 'package:flutter_shop/constant/theme.dart';
 import 'package:flutter_shop/provider/navigation_bar.dart';
 import 'package:flutter_shop/routes/delegate.dart';
 import 'package:flutter_shop/routes/parser.dart';
+import 'package:flutter_shop/theme/themes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -18,12 +20,15 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => NavigationBarProvider())
+        ChangeNotifierProvider(create: (context) => NavigationBarProvider()),
+        ChangeNotifierProvider(create: (context) => AppThemeProvider())
       ],
       child: MyApp(),
     )
   );
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
     MyApp({Key? key}) : super(key: key) {
@@ -37,9 +42,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      
       debugShowCheckedModeBanner: false,
       title: 'Flutter Shop',
-      theme: AppTheme.themeData,
+      // themeMode: ThemeMode.light,
+      // theme: AppTheme.of(context).getThemeData(),
+      theme: ThemeData(
+        backgroundColor: AppThemes.of(context).primaryBackgroundColor
+        // primaryColor: AppThemes.of(context).primaryColor,
+        // colorScheme: ThemeData().colorScheme.copyWith(
+        //   primary: AppThemes.of(context).primaryColor,
+        // ),
+      ),
       routerDelegate: appRouterDelegate,
       routeInformationParser: const AppRouteParser(),
     );

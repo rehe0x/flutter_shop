@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_shop/constant/custom_icons.dart';
+import 'package:flutter_shop/theme/themes.dart';
 import 'package:provider/provider.dart';
 import '../constant/theme.dart';
 import '../provider/navigation_bar.dart';
@@ -15,12 +16,6 @@ class SearchField extends StatefulWidget {
    this.readOnly = false, this.autofocus = false,
    }) : super(key: key);
 
-  static final OutlineInputBorder _outlineInputBorder = OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(33),
-                                  borderSide: const BorderSide(
-                                    color: AppTheme.primarySubBackgroundColor,
-                                  ),
-                                );
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -82,19 +77,28 @@ class _SearchFieldState extends State<SearchField> {
     _textEditingController.dispose();
   }
 
-  Container suffixIcon = Container(
-      width: 20,
-      height: 20,
-      margin: const EdgeInsets.only(right: 10),
-      child: const Icon(CustomIcons.close, size: 18,color: AppTheme.primarySubBackgroundColor,),
-      decoration: BoxDecoration(
-        color: AppTheme.primaryDisabledColor,
-        borderRadius: BorderRadius.circular(150)
-      ),
-    );
 
   @override
   Widget build(BuildContext context) {
+
+    final OutlineInputBorder _outlineInputBorder = OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(33),
+                                    borderSide: BorderSide(
+                                      color: AppThemes.of(context).primaryAccentColor,
+                                    ),
+                                  );
+
+    final Container suffixIcon = Container(
+        width: 20,
+        height: 20,
+        margin: const EdgeInsets.only(right: 10),
+        child: Icon(CustomIcons.close, size: 18,color: AppThemes.of(context).primaryBackgroundColor,),
+        decoration: BoxDecoration(
+          color: AppThemes.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(150)
+        ),
+      );
+
     return Row(
       // mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -106,31 +110,31 @@ class _SearchFieldState extends State<SearchField> {
             child: TextField(
               focusNode: _focusNode,
               controller: _textEditingController,
-              style: AppStyle.title3MediumStyle,
-              cursorColor: AppTheme.primaryColor,
+              style: AppThemes.of(context).textTheme.titleSmall,
+              cursorColor: AppThemes.of(context).primaryColor,
               textAlignVertical: TextAlignVertical.bottom,
               // 不弹出键盘
               readOnly: widget.readOnly,
               // 默认获取焦点
               autofocus: widget.autofocus,
               // 显示焦点
-              // showCursor: true,
+              showCursor: true,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: AppTheme.primarySubBackgroundColor,
+                fillColor: AppThemes.of(context).primaryAccentColor,
                 hintText: '搜索',
-                hintStyle: AppStyle.titleSub2Style,
+                hintStyle: AppThemes.of(context).textTheme.labelMedium,
                 // contentPadding: const EdgeInsets.symmetric(horizontal: 0),
                 border: InputBorder.none,
-                enabledBorder: SearchField._outlineInputBorder,
-                focusedBorder: SearchField._outlineInputBorder,
-                prefixIcon: const Icon(CustomIcons.search),
+                enabledBorder: _outlineInputBorder,
+                focusedBorder: _outlineInputBorder,
+                prefixIcon: Icon(CustomIcons.search, color: AppThemes.of(context).labelIconColor,),
                 suffixIcon: _focus ? GestureDetector(
                   child: suffixIcon,
                   onTap: (){
                     _textEditingController.clear();
                   },
-                ) : const Icon(CustomIcons.scan),
+                ) : Icon(CustomIcons.scan, color: AppThemes.of(context).labelIconColor),
                 suffixIconConstraints: _focus ? const BoxConstraints() : null
               ),
             ),
@@ -140,11 +144,11 @@ class _SearchFieldState extends State<SearchField> {
          _focus ? CupertinoButton(
            padding: const EdgeInsets.all(0),
            minSize: 0,
-           child: const Text('取消', style: AppStyle.textButton3Style,),
+           child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
            onPressed: (){
             unFocusFunction();
            },
-         ) : const Icon(CustomIcons.cartFill),
+         ) : Icon(CustomIcons.cartFill, color: AppThemes.of(context).primaryIconColor,),
       ],
     );
   }

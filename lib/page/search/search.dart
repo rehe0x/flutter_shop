@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/page/search/search_body.dart';
 import 'package:flutter_shop/page/search/search_goods.dart';
+import 'package:flutter_shop/theme/themes.dart';
 import 'package:provider/provider.dart';
 import '../../provider/navigation_bar.dart';
 import '../../widget/search_field.dart';
@@ -10,8 +11,11 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: const SearchField(height: 40, autofocus: true),
+        backgroundColor: AppThemes.of(context).primaryBackgroundColor,
+        elevation: 0.0,
       ),
       body: const _SearchRoute()
     );

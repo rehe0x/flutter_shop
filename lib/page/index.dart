@@ -1,7 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/constant/theme.dart';
 import 'package:flutter_shop/page/search/search.dart';
+import 'package:flutter_shop/theme/themes.dart';
 import 'package:provider/provider.dart';
 
 import '../constant/custom_icons.dart';
@@ -36,8 +38,11 @@ class AppIndex extends StatelessWidget {
     return CupertinoTabScaffold(
         controller: cupertinoTabController,
         tabBar: CupertinoTabBar(
-          activeColor: Theme.of(context).primaryColor,
+          backgroundColor: AppThemes.of(context).primaryBackgroundColor,
+          activeColor: AppThemes.of(context).primaryColor,
+          inactiveColor: AppThemes.of(context).bottomAppBarColor,
           items: _tabs.map((tab) => BottomNavigationBarItem(
+            // backgroundColor: Colors.red,
               icon: Icon(tab['icon']),
               label: tab['text'])).toList(),
           onTap: (int index){

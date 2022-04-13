@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/theme/themes.dart';
 
 import '../../constant/theme.dart';
 
@@ -15,7 +16,7 @@ class SearchGoodsBody extends StatelessWidget {
             parent: BouncingScrollPhysics()
           ),
           children: [
-            const Text('第二页', style: AppStyle.title1Style,),
+            Text('第二页', style: AppThemes.of(context).textTheme.titleLarge,),
             GridView(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
@@ -34,7 +35,7 @@ class SearchGoodsBody extends StatelessWidget {
                 Icon(Icons.free_breakfast)
               ],
             ),
-            const Text('热搜商品', style: AppStyle.title1Style,),
+            Text('热搜商品', style: AppThemes.of(context).textTheme.titleLarge,),
             GridView(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
