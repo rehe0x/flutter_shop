@@ -162,7 +162,7 @@ class MenuList extends StatelessWidget {
                      },
                     )
                   ),
-                  const Text('菜单呢'),
+                  Text('菜单呢', style: AppThemes.of(context).textTheme.titleSmall,),
                 ],
               ),
             );

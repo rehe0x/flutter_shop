@@ -125,9 +125,12 @@ class _SearchFieldState extends State<SearchField> {
                 hintText: '搜索',
                 hintStyle: AppThemes.of(context).textTheme.labelMedium,
                 // contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-                border: InputBorder.none,
-                enabledBorder: _outlineInputBorder,
-                focusedBorder: _outlineInputBorder,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(33),
+                  borderSide: BorderSide.none
+                ),
+                // enabledBorder: _outlineInputBorder,
+                // focusedBorder: _outlineInputBorder,
                 prefixIcon: Icon(CustomIcons.search, color: AppThemes.of(context).labelIconColor,),
                 suffixIcon: _focus ? GestureDetector(
                   child: suffixIcon,
