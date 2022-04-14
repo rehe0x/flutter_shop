@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/constant/custom_icons.dart';
-import 'package:flutter_shop/theme/themes.dart';
 
-import '../../constant/theme.dart';
+import '../../theme/themes.dart';
 import '../../widget/search_field.dart';
 import '../../page/home/widget.dart' as home_widget;
 
@@ -42,12 +39,16 @@ class _MyCustomScrollView extends StatelessWidget {
           toolbarHeight: 40,
           // 总高度 
           expandedHeight: 85,
-          floating: true,
+          // 固定导航栏
           pinned: true,
+          // 滑动一点导航栏就显示 否则滑倒最顶部
+          floating: true,
+          // 导航栏显示动画效果 不管滑动多少自动弹出显示
           // snap: true,
-          // 固定flexibleSpace
+          // FlexibleSpaceBar是否和导航固定
           stretch: false,
           flexibleSpace: FlexibleSpaceBar(
+            // 拉动伸缩比例
             expandedTitleScale: 1,
             title: const SearchField(height: 40, readOnly: true,),
             centerTitle: true,

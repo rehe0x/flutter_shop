@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/page/search/search_body.dart';
-import 'package:flutter_shop/page/search/search_goods.dart';
-import 'package:flutter_shop/theme/themes.dart';
-import 'package:provider/provider.dart';
-import '../../provider/navigation_bar.dart';
+
+import 'search_body.dart';
+import 'search_goods.dart';
+import '../../theme/themes.dart';
 import '../../widget/search_field.dart';
+
+/// 搜索页 带子路由
 class Search extends StatelessWidget {
   const Search({ Key? key }) : super(key: key);
   @override
@@ -22,7 +23,7 @@ class Search extends StatelessWidget {
   }
 }
 
-
+/// 搜索页子路由
 class _SearchRoute extends StatelessWidget {
   const _SearchRoute({Key? key}) : super(key: key);
 

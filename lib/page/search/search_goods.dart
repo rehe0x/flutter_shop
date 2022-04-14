@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/theme/themes.dart';
+import '../../theme/themes.dart';
 
-import '../../constant/theme.dart';
-
+/// 搜索页商品内容
 class SearchGoodsBody extends StatelessWidget {
   const SearchGoodsBody({ Key? key }) : super(key: key);
 

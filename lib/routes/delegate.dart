@@ -1,13 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/routes/handle.dart';
+import 'package:flutter/foundation.dart';
 
-/// 路由代理
+import 'handle.dart';
+
+/// 自定义路由代理
 class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
     with PopNavigatorRouterDelegateMixin<List<RouteSettings>>, ChangeNotifier {
   
+  /// 路由列表
   final List<Page<dynamic>> _pages = [];
 
+  /// 获取路由代理对象
   static AppRouterDelegate of(BuildContext context) {
     final delegate = Router.of(context).routerDelegate;
     assert(delegate is AppRouterDelegate, 'Delegate type must match');
@@ -30,15 +33,6 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
     debugPrint('${describeIdentity(this)}._pages: $_pages');
     return Navigator(
       key: navigatorKey,
-      // onGenerateRoute: (RouteSettings settings) {
-      //   debugPrint('onGenerateRoute: $settings');
-      //   return MaterialPageRoute(
-      //     settings: settings,
-      //     builder: (BuildContext context) {
-      //       return const AppIndex();
-      //     },
-      //   );
-      // },
       onPopPage: _onPopPage,
       pages: List.of(_pages)
     );
@@ -69,6 +63,7 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
     notifyListeners();
   }
 
+  /// 物理按键返回路由 防止退出app
   @override
   Future<bool> popRoute() {
     if (canPop()) {
@@ -79,7 +74,6 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
     }
     return _confirmExit();
   }
-
 
   bool canPop() {
     return _pages.length > 1;
@@ -97,14 +91,14 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
     }
   }
 
-  // 添加
+  // 添加路由
   void push({required String name, dynamic arguments}) {
      debugPrint('push: $name');
     _pages.add(RouteHandle.createPage(RouteSettings(name: name, arguments: arguments)));
     notifyListeners();
   }
 
-   /// 返回
+   /// 返回上层
   void pop() {
     debugPrint('pop');
     if (_pages.isNotEmpty) {
@@ -113,6 +107,7 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
     notifyListeners();
   }
 
+  /// 替换当前路由
   void replace({required String name, dynamic arguments}) {
     debugPrint('replace: $name');
     if (_pages.isNotEmpty) {
@@ -120,6 +115,7 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
     }
     push(name: name,arguments: arguments);
   }
+
 
   Future<bool> _confirmExit() async {
     debugPrint('_confirmExit');

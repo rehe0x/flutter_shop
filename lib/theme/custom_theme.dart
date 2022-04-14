@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+/// 自定义主题模型
 class CustomTheme {
   /// 主题颜色 选中/按钮 
   final Color primaryColor;
@@ -119,7 +120,8 @@ class CustomTheme {
   });
 }
 
-
+/// 主题色大中小标题 标准体
+/// 副色大中小题 细体
 class CustomTextTheme {
   final TextStyle titleLarge;
   final TextStyle titleMedium;
@@ -128,7 +130,6 @@ class CustomTextTheme {
   final TextStyle labelLarge;
   final TextStyle labelMedium;
   final TextStyle labelSmall;
-
 
   const CustomTextTheme({
     required this.titleLarge,
@@ -141,6 +142,7 @@ class CustomTextTheme {
   });
 }
 
+/// 文本按钮大中小标题 主题色
 class CustomButtonTextTheme {
   final TextStyle buttonLarge;
   final TextStyle buttonMedium;

@@ -1,16 +1,15 @@
 
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_shop/constant/theme.dart';
-import 'package:flutter_shop/page/search/search.dart';
-import 'package:flutter_shop/theme/themes.dart';
 import 'package:provider/provider.dart';
 
-import '../constant/custom_icons.dart';
-import '../provider/navigation_bar.dart';
 import 'home/home.dart';
+import 'search/search.dart';
+import '../theme/themes.dart';
+import '../constant/custom_icons.dart';
+import '../provider/navigation_provider.dart';
 
-/// 使用ios风格底部tab脚手架
+/// 首页保护底部菜单脚手架ios风格
 class AppIndex extends StatelessWidget {
   static final  List _tabs = [
     {'icon': CustomIcons.home, 'text': '首页'},
@@ -33,26 +32,26 @@ class AppIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CupertinoTabController cupertinoTabController = Provider.of<NavigationBarProvider>(context, listen: false).cupertinoTabController;
-
+    /// 全局TabController
+    final CupertinoTabController cupertinoTabController = Provider.of<NavigationProvider>(context, listen: false).cupertinoTabController;
     return CupertinoTabScaffold(
         controller: cupertinoTabController,
         tabBar: CupertinoTabBar(
           backgroundColor: AppThemes.of(context).primaryBackgroundColor,
-          activeColor: AppThemes.of(context).primaryColor,
           inactiveColor: AppThemes.of(context).bottomAppBarColor,
+          activeColor: AppThemes.of(context).primaryColor,
           items: _tabs.map((tab) => BottomNavigationBarItem(
-            // backgroundColor: Colors.red,
               icon: Icon(tab['icon']),
               label: tab['text'])).toList(),
           onTap: (int index){
-            // 默认打开搜索页焦点
+            /// 如果是搜索页 默认打开搜索框焦点
             if (index == 2) {
-              Provider.of<NavigationBarProvider>(context, listen: false).updateRequestFocus(true);
+              Provider.of<NavigationProvider>(context, listen: false).updateSearchFocus(true);
             }
           },
         ),
         tabBuilder: (BuildContext context, int index) {
+          /// 问题 键盘弹出关闭 会执行很多次
           debugPrint('tabBuilder index: $index');
           return _pages[index];
         }

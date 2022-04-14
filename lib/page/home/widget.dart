@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/common/common.dart';
-import 'package:flutter_shop/theme/themes.dart';
 
-import '../../constant/theme.dart';
+import '../../common/common.dart';
+import '../../theme/themes.dart';
 import '../../routes/delegate.dart';
 
+/// 首页轮播部件
 class Banner extends StatelessWidget {
   const Banner({ Key? key }) : super(key: key);
   @override
@@ -29,103 +29,7 @@ class Banner extends StatelessWidget {
 }
 
 
-
-class GroupHorizontalTitle extends StatelessWidget {
-  final String title;
-  const GroupHorizontalTitle ({required this.title, Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(title, style: AppThemes.of(context).textTheme.titleLarge),
-          CupertinoButton(
-            padding: const EdgeInsets.all(0),
-            minSize: 0,
-            child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
-            onPressed: (){
-              AppRouterDelegate.of(context).push(name: '/test1');
-            },
-          ),
-          CupertinoButton(
-            padding: const EdgeInsets.all(0),
-            minSize: 0,
-            child: Text('切换主题', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
-            onPressed: (){
-              AppThemes.change(context, ThemeEnum.dark);
-            },
-          )
-        ],
-      ),
-    );
-  }
-}
-
-
-class GroupHorizontalList extends StatelessWidget {
-  const GroupHorizontalList({ Key? key }) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-      child: Row(
-        children: ListUtil.generate(
-          length: 30,
-          item: (index) => GoodsItem(goodsName: index),
-          separator: (index) => const SizedBox(width: 15,)
-        )
-      )
-    );
-  }
-}
-
-
-class GoodsItem extends StatelessWidget {
-  final int goodsName;
-  const GoodsItem({required this.goodsName, Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      // color: Colors.black87,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 150,
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: AppThemes.of(context).scaffoldAccentColor,
-              borderRadius: BorderRadius.circular(14)
-            ),
-            child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.cover,),
-          ),
-          Text(
-            'sdfjsl放松的方式的见风使舵老师',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: AppThemes.of(context).textTheme.titleSmall,
-          ),
-          Text(
-            '4343.54元',
-            maxLines: 1,
-            style: AppThemes.of(context).textTheme.titleSmall,
-          )
-        ],
-      ),
-    );
-  }
-}
-
+/// 功能菜单列表
 class MenuList extends StatelessWidget {
   const MenuList ({ Key? key }) : super(key: key);
 
@@ -175,6 +79,105 @@ class MenuList extends StatelessWidget {
 }
 
 
+/// 商品组标题列
+class GroupHorizontalTitle extends StatelessWidget {
+  final String title;
+  const GroupHorizontalTitle ({required this.title, Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(title, style: AppThemes.of(context).textTheme.titleLarge),
+          CupertinoButton(
+            padding: const EdgeInsets.all(0),
+            minSize: 0,
+            child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
+            onPressed: (){
+              AppRouterDelegate.of(context).push(name: '/test1');
+            },
+          ),
+          CupertinoButton(
+            padding: const EdgeInsets.all(0),
+            minSize: 0,
+            child: Text('切换主题', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
+            onPressed: (){
+              AppThemes.change(context, ThemeEnum.dark);
+            },
+          )
+        ],
+      ),
+    );
+  }
+}
+
+/// 商品组横向滚动列表
+/// 这里用 SingleChildScrollView 可以自适应高度Sliver套ListView 必须固定高度
+class GroupHorizontalList extends StatelessWidget {
+  const GroupHorizontalList({ Key? key }) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      child: Row(
+        children: ListUtil.generate(
+          length: 30,
+          item: (index) => GoodsItem(goodsName: index),
+          separator: (index) => const SizedBox(width: 15,)
+        )
+      )
+    );
+  }
+}
+
+/// 商品卡片
+class GoodsItem extends StatelessWidget {
+  final int goodsName;
+  const GoodsItem({required this.goodsName, Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      // color: Colors.black87,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 150,
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: AppThemes.of(context).scaffoldAccentColor,
+              borderRadius: BorderRadius.circular(14)
+            ),
+            child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.cover,),
+          ),
+          Text(
+            'sdfjsl放松的方式的见风使舵老师',
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: AppThemes.of(context).textTheme.titleSmall,
+          ),
+          Text(
+            '4343.54元',
+            maxLines: 1,
+            style: AppThemes.of(context).textTheme.titleSmall,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+/// 活动组
 class ActivityGroup extends StatelessWidget {
   const ActivityGroup({ Key? key }) : super(key: key);
 

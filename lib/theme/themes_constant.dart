@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/theme/custom_theme.dart';
+import 'custom_theme.dart';
 
+/// 主题配置
 class ThemeConstant{
 
   static CustomTheme main = CustomTheme(

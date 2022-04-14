@@ -1,14 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/provider/navigation_bar.dart';
-import 'package:flutter_shop/theme/themes.dart';
-import 'package:provider/provider.dart';
+import '../../theme/themes.dart';
 
-import '../../constant/theme.dart';
-
+/// 搜索页默认内容
 class SearchBody extends StatelessWidget {
   const SearchBody({ Key? key }) : super(key: key);
-  
   
   @override
   Widget build(BuildContext context) { 

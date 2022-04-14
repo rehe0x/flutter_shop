@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import '../page/index.dart';
 import '../page/splash/splash.dart';
 
+/// 路由配置
 class RouteHandle{
-  
+
+/// 创建路由页
 static Page createPage(RouteSettings routeSettings) {
     debugPrint('_createPage$routeSettings');
     Widget child;
