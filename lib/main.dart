@@ -5,8 +5,10 @@ import 'provider/app_provider.dart';
 import 'provider/navigation_provider.dart';
 import 'routes/delegate.dart';
 import 'routes/parser.dart';
+import 'common/screenutil/flutter_screenutil.dart';
 
-void main() {
+
+void main() async{
   // if (Platform.isAndroid) {
   //     //去掉安卓透明状态栏 && 设置状态字体颜色
   //     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
@@ -16,6 +18,7 @@ void main() {
   //     );
   //     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   // }
+  await ScreenUtil.ensureScreenSize();
   runApp(
     MultiProvider(
       providers: [

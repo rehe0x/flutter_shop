@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../common/screenutil/src/size_extension.dart';
 
 import '../../theme/themes.dart';
 import '../../widget/search_field.dart';
@@ -36,9 +37,9 @@ class _MyCustomScrollView extends StatelessWidget {
           backgroundColor: AppThemes.of(context).primaryBackgroundColor,
           elevation: 0.0,
           // appbar高度
-          toolbarHeight: 40,
+          toolbarHeight: 45.h,
           // 总高度 
-          expandedHeight: 85,
+          expandedHeight: 85.h,
           // 固定导航栏
           pinned: true,
           // 滑动一点导航栏就显示 否则滑倒最顶部
@@ -50,12 +51,12 @@ class _MyCustomScrollView extends StatelessWidget {
           flexibleSpace: FlexibleSpaceBar(
             // 拉动伸缩比例
             expandedTitleScale: 1,
-            title: const SearchField(height: 40, readOnly: true,),
+            title: SearchField(height: 40.h, readOnly: true,),
             centerTitle: true,
-            titlePadding: const EdgeInsets.only(bottom: 2, left: 15, right: 15),
+            titlePadding: EdgeInsets.only(bottom: 2.r, left: 15.r, right: 15.r),
             background: SafeArea(
-              top: false,
-              minimum: const EdgeInsets.only(top: 42),
+              // top: false,
+              // minimum: EdgeInsets.only(top: 44.h),
               child: Text(
                 title,
                 textAlign: TextAlign.center,
@@ -64,9 +65,9 @@ class _MyCustomScrollView extends StatelessWidget {
             ),
           ),
         ),
-        const SliverPadding(
-          padding: EdgeInsets.only(top: 10),
-          sliver: SliverToBoxAdapter(
+        SliverPadding(
+          padding: EdgeInsets.only(top: 10.r),
+          sliver: const SliverToBoxAdapter(
             child: home_widget.Banner(),
           ),
         ),

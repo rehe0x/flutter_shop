@@ -1,5 +1,9 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import '../../common/screenutil/flutter_screenutil.dart';
+import '../../common/screenutil/src/size_extension.dart';
 import '../../theme/themes.dart';
 
 /// 搜索页商品内容
@@ -9,60 +13,130 @@ class SearchGoodsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
-          // padding: const EdgeInsets.all(10),
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()
-          ),
-          children: [
-            Text('第二页', style: AppThemes.of(context).textTheme.titleLarge,),
-            GridView(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,//按2列展示
-                mainAxisSpacing: 5,//主轴边距
-                crossAxisSpacing: 5,//纵轴边距
-                childAspectRatio: 3,//宽高比3:1
-              ),
-              children: const [
-                Icon(Icons.ac_unit),
-                Icon(Icons.airport_shuttle),
-                Icon(Icons.all_inclusive),
-                Icon(Icons.beach_access),
-                Icon(Icons.cake),
-                Icon(Icons.free_breakfast)
-              ],
-            ),
-            Text('热搜商品', style: AppThemes.of(context).textTheme.titleLarge,),
-            GridView(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,//按2列展示
-                mainAxisSpacing: 5,//主轴边距
-                crossAxisSpacing: 5,//纵轴边距
-                childAspectRatio: 3,//宽高比3:1
-              ),
-              children:  [
-                Icon(Icons.ac_unit),
-                Icon(Icons.airport_shuttle),
-                Icon(Icons.all_inclusive),
-                Icon(Icons.beach_access),
-                Icon(Icons.cake),
-                Icon(Icons.free_breakfast),
-                InkWell(
-                  child: Text('ceshi2'),
-                  onTap: (){
-                    Navigator.pop(context);
-                    // Navigator.push(context,
-                    // MaterialPageRoute(builder: (context) => const _MyCustomScrollViewTest()));
-                  },
-                )
-              ],
-            )
-          ],
+       backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
+       body: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics()
         ),
+        slivers: [
+          SliverAppBar(
+            backgroundColor: AppThemes.of(context).primaryBackgroundColor,
+            title: Text('ceshi' , style: TextStyle(color: Colors.green),),
+          ),
+          // SliverPersistentHeader(
+          //   //是否固定头布局 默认false
+          //   pinned: false,
+          //   //是否浮动 默认false
+          //   floating: false,
+          //   //必传参数,头布局内容
+          //   delegate: MySliverPHeaderDelegate(
+          //     //缩小后的布局高度
+          //     minHeight: 0.0,
+          //     //展开后的高度
+          //     maxHeight: 40.0, 
+          //     child: Container(
+          //       color: Colors.white,
+          //       child: Text('是登陆福建多少垃圾分类是宽度减肥'),
+          //     ),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 30,
+          //     color: Colors.red,
+          //   ),
+          // ),
+          SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, index) {
+                return const _GoodsItem();
+              },
+              childCount: 60
+            ),
+            itemExtent: 120.h,
+          ), 
+        ],
+       ),
+    );
+  }
+}
+
+class MySliverPHeaderDelegate extends SliverPersistentHeaderDelegate{
+  final double minHeight; //最小高度
+  final double maxHeight; //最大高度
+  final Widget child; //子Widget布局
+
+  MySliverPHeaderDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(child: child,);
+  }
+
+  @override
+  double get maxExtent => max(maxHeight, minHeight);
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(MySliverPHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
+  }
+
+}
+
+class _GoodsItem extends StatelessWidget {
+  const _GoodsItem({ Key? key }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(width: 5.w,),
+        Container(
+          height: 110.r,
+          width: 110.r,
+          padding: const EdgeInsets.all(5).r,
+          decoration: BoxDecoration(
+            color: AppThemes.of(context).scaffoldAccentColor,
+            borderRadius: BorderRadius.circular(14).r
+          ),
+          child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.cover,),
+        ),
+        SizedBox(width: 10.w,),
+      
+        Expanded(
+          
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children:  [
+              Text(
+              '距离圣诞节福利时间到风口浪尖上端口浪费建设快乐的肌肤脸上的肌肤框脸上的肌肤来说',
+               maxLines: 2, 
+               overflow: TextOverflow.ellipsis,
+               style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.sp
+               ),
+              ),
+              Text('data'),
+              Text('data'),
+              Text('data'),
+              // Text('data'),
+              // Text('data'),
+              
+            ],
+          ),
+        )
+      ],
     );
   }
 }

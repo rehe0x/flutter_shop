@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
 import 'package:provider/provider.dart';
 
 
@@ -87,13 +88,13 @@ class _SearchFieldState extends State<SearchField> {
   Widget build(BuildContext context) {
 
     final Container suffixIcon = Container(
-        width: 20,
-        height: 20,
-        margin: const EdgeInsets.only(right: 10),
-        child: Icon(CustomIcons.close, size: 18,color: AppThemes.of(context).primaryBackgroundColor,),
+        width: 20.w,
+        height: 20.w,
+        margin: EdgeInsets.only(right: 10.r),
+        child: Icon(CustomIcons.close, size: 18.sp,color: AppThemes.of(context).primaryBackgroundColor,),
         decoration: BoxDecoration(
           color: AppThemes.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(150)
+          borderRadius: BorderRadius.circular(150.r)
         ),
       );
 
@@ -120,10 +121,10 @@ class _SearchFieldState extends State<SearchField> {
                 filled: true,
                 fillColor: AppThemes.of(context).primaryAccentColor,
                 hintText: '搜索',
-                hintStyle: AppThemes.of(context).textTheme.labelMedium,
+                hintStyle: AppThemes.of(context).textTheme.displayMedium,
                 // contentPadding: const EdgeInsets.symmetric(horizontal: 0),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(33),
+                  borderRadius: BorderRadius.circular(33.r),
                   borderSide: BorderSide.none
                 ),
                 // enabledBorder: _outlineInputBorder,
@@ -140,11 +141,11 @@ class _SearchFieldState extends State<SearchField> {
             ),
           ),
         ),
-        const SizedBox(width: 5,),
+        SizedBox(width: 5.w,),
          _focus ? CupertinoButton(
            padding: const EdgeInsets.all(0),
            minSize: 0,
-           child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
+           child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
            onPressed: (){
             _focusNode.unfocus();
            },

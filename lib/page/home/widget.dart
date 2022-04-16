@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
 
 import '../../common/common.dart';
 import '../../theme/themes.dart';
@@ -11,7 +14,7 @@ class Banner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 200.h,
       child: Stack(
         children: [
           Positioned.fill(
@@ -36,7 +39,7 @@ class MenuList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0).r,
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,//按2列展示
@@ -53,11 +56,11 @@ class MenuList extends StatelessWidget {
               child: Column(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(150),
+                    borderRadius: BorderRadius.circular(150.r),
                     child: LayoutBuilder(
                       builder: (BuildContext context, BoxConstraints constraints) { 
                         return Container(
-                          height: constraints.biggest.width,
+                          height: constraints.biggest.width.w,
                           decoration: BoxDecoration(
                             color: Colors.blue[100*(index+1%20)],
                           ),
@@ -66,7 +69,7 @@ class MenuList extends StatelessWidget {
                      },
                     )
                   ),
-                  Text('菜单呢', style: AppThemes.of(context).textTheme.titleSmall,),
+                  Text('菜单呢', style: AppThemes.of(context).textTheme.labelMedium,),
                 ],
               ),
             );
@@ -87,7 +90,7 @@ class GroupHorizontalTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0).r,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -96,7 +99,7 @@ class GroupHorizontalTitle extends StatelessWidget {
           CupertinoButton(
             padding: const EdgeInsets.all(0),
             minSize: 0,
-            child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
+            child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
             onPressed: (){
               AppRouterDelegate.of(context).push(name: '/test1');
             },
@@ -104,7 +107,7 @@ class GroupHorizontalTitle extends StatelessWidget {
           CupertinoButton(
             padding: const EdgeInsets.all(0),
             minSize: 0,
-            child: Text('切换主题', style: AppThemes.of(context).buttonTextTheme.buttonSmall,),
+            child: Text('切换主题', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
             onPressed: (){
               AppThemes.change(context, ThemeEnum.dark);
             },
@@ -125,12 +128,12 @@ class GroupHorizontalList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0).r,
       child: Row(
         children: ListUtil.generate(
           length: 30,
           item: (index) => GoodsItem(goodsName: index),
-          separator: (index) => const SizedBox(width: 15,)
+          separator: (index) => SizedBox(width: 15.w,)
         )
       )
     );
@@ -145,26 +148,26 @@ class GoodsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150,
+      width: 150.w,
       // color: Colors.black87,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            height: 150,
-            padding: const EdgeInsets.all(5),
+            height: 150.h,
+            padding: const EdgeInsets.all(5).r,
             decoration: BoxDecoration(
               color: AppThemes.of(context).scaffoldAccentColor,
-              borderRadius: BorderRadius.circular(14)
+              borderRadius: BorderRadius.circular(14.r)
             ),
             child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.cover,),
           ),
           Text(
-            'sdfjsl放松的方式的见风使舵老师',
+            '放松的方式的见风使舵老师',
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: AppThemes.of(context).textTheme.titleSmall,
+            style: AppThemes.of(context).textTheme.labelMedium,
           ),
           Text(
             '4343.54元',
@@ -184,15 +187,15 @@ class ActivityGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0).r,
       child: Stack(
         children: [
           Container(
-            height: 250,
+            height: 250.h,
             width: double.infinity,
             color: Colors.blueAccent,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0).r,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -203,7 +206,7 @@ class ActivityGroup extends StatelessWidget {
             )
           ),
           Container(
-            margin: const EdgeInsets.only(top: 150),
+            margin: const EdgeInsets.only(top: 150).r,
             child: const GroupHorizontalList(),
           )
         ],

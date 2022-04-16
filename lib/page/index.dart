@@ -1,8 +1,10 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
 import 'package:provider/provider.dart';
 
+import '../common/screenutil/src/screen_util.dart';
 import 'home/home.dart';
 import 'search/search.dart';
 import '../theme/themes.dart';
@@ -32,29 +34,46 @@ class AppIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      orientation: Orientation.portrait);
+      
+    debugPrint('w=${100.w}, h=${100.h}, r=${100.r}, sp= ${100.sp}, pixelRatio=${ScreenUtil().pixelRatio}, screenWidth=${ScreenUtil().screenWidth}, screenHeight=${ScreenUtil().screenHeight}');
     /// 全局TabController
     final CupertinoTabController cupertinoTabController = Provider.of<NavigationProvider>(context, listen: false).cupertinoTabController;
-    return CupertinoTabScaffold(
-        controller: cupertinoTabController,
-        tabBar: CupertinoTabBar(
-          backgroundColor: AppThemes.of(context).primaryBackgroundColor,
-          inactiveColor: AppThemes.of(context).bottomAppBarColor,
-          activeColor: AppThemes.of(context).primaryColor,
-          items: _tabs.map((tab) => BottomNavigationBarItem(
-              icon: Icon(tab['icon']),
-              label: tab['text'])).toList(),
-          onTap: (int index){
-            /// 如果是搜索页 默认打开搜索框焦点
-            if (index == 2) {
-              Provider.of<NavigationProvider>(context, listen: false).updateSearchFocus(true);
-            }
-          },
-        ),
-        tabBuilder: (BuildContext context, int index) {
-          /// 问题 键盘弹出关闭 会执行很多次
-          debugPrint('tabBuilder index: $index');
-          return _pages[index];
-        }
+    return CupertinoTheme(
+      data: CupertinoThemeData(
+        textTheme: CupertinoTextThemeData(
+          tabLabelTextStyle: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 12.sp
+          )
+        )
+      ),
+      child: CupertinoTabScaffold(
+          controller: cupertinoTabController,
+          tabBar: CupertinoTabBar(
+            backgroundColor: AppThemes.of(context).primaryBackgroundColor,
+            inactiveColor: AppThemes.of(context).bottomAppBarColor,
+            activeColor: AppThemes.of(context).primaryColor,
+            
+            items: _tabs.map((tab) => BottomNavigationBarItem(
+                icon: Icon(tab['icon']),
+                label: tab['text'])).toList(),
+            onTap: (int index){
+              /// 如果是搜索页 默认打开搜索框焦点
+              if (index == 2) {
+                Provider.of<NavigationProvider>(context, listen: false).updateSearchFocus(true);
+              }
+            },
+          ),
+          tabBuilder: (BuildContext context, int index) {
+            /// 问题 键盘弹出关闭 会执行很多次
+            debugPrint('tabBuilder index: $index');
+            return _pages[index];
+          }
+      ),
     );
   }
 }

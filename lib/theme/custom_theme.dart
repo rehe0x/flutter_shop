@@ -66,14 +66,25 @@ class CustomTheme {
         color: primaryTextColor
       ),
       labelLarge: textTheme.labelLarge.copyWith(
-        color: labelTextColor
+        color: primaryTextColor
       ),
       labelMedium: textTheme.labelMedium.copyWith(
-        color: labelTextColor
+        color: primaryTextColor
       ),
       labelSmall: textTheme.labelSmall.copyWith(
+        color: primaryTextColor
+      ),
+      
+      displayLarge: textTheme.displayLarge.copyWith(
         color: labelTextColor
       ),
+      displayMedium: textTheme.displayMedium.copyWith(
+        color: labelTextColor
+      ),
+      displaySmall: textTheme.displaySmall.copyWith(
+        color: labelTextColor
+      ),
+
     );
 
     CustomButtonTextTheme _buttonTextTheme = CustomButtonTextTheme(
@@ -123,13 +134,18 @@ class CustomTheme {
 /// 主题色大中小标题 标准体
 /// 副色大中小题 细体
 class CustomTextTheme {
+  /// 粗体
   final TextStyle titleLarge;
   final TextStyle titleMedium;
   final TextStyle titleSmall;
-
+  /// 细体
   final TextStyle labelLarge;
   final TextStyle labelMedium;
   final TextStyle labelSmall;
+  /// 副色
+  final TextStyle displayLarge;
+  final TextStyle displayMedium;
+  final TextStyle displaySmall;
 
   const CustomTextTheme({
     required this.titleLarge,
@@ -139,6 +155,10 @@ class CustomTextTheme {
     required this.labelLarge,
     required this.labelMedium,
     required this.labelSmall,
+
+    required this.displayLarge,
+    required this.displayMedium,
+    required this.displaySmall,
   });
 }
 

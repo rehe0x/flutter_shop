@@ -35,7 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.2
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,33 +75,33 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: PingFangSC-Regular
-      fonts:
-        - asset: assets/fonts/苹方黑体-准-简.ttf
+    # - family: PingFangSC-Regular
+    #   fonts:
+    #     - asset: assets/fonts/苹方黑体-准-简.ttf
 
-    - family: PingFangSC-Ultralight
-      fonts:
-        - asset: assets/fonts/苹方黑体-极细-简.ttf
+    # - family: PingFangSC-Ultralight
+    #   fonts:
+    #     - asset: assets/fonts/苹方黑体-极细-简.ttf
 
-    - family: PingFangSC-Light
-      fonts:
-        - asset: assets/fonts/苹方黑体-细-简.ttf
+    # - family: PingFangSC-Light
+    #   fonts:
+    #     - asset: assets/fonts/苹方黑体-细-简.ttf
 
-    - family: PingFangSC-Thin
-      fonts:
-        - asset: assets/fonts/苹方黑体-纤细-简.ttf
+    # - family: PingFangSC-Thin
+    #   fonts:
+    #     - asset: assets/fonts/苹方黑体-纤细-简.ttf
 
-    - family: PingFangSC-Medium
-      fonts:
-        - asset: assets/fonts/苹方黑体-中黑-简.ttf
+    # - family: PingFangSC-Medium
+    #   fonts:
+    #     - asset: assets/fonts/苹方黑体-中黑-简.ttf
 
-    - family: PingFangSC-Semibold
-      fonts:
-        - asset: assets/fonts/苹方黑体-中粗-简.ttf
+    # - family: PingFangSC-Semibold
+    #   fonts:
+    #     - asset: assets/fonts/苹方黑体-中粗-简.ttf
 
-    - family: zpix2
-      fonts:
-        - asset: assets/fonts/zpix.ttf
+    # - family: zpix2
+    #   fonts:
+    #     - asset: assets/fonts/zpix.ttf
 
     - family: iconfont1
       fonts:

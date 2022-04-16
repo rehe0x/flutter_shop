@@ -1,9 +1,31 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
 import 'custom_theme.dart';
 
 /// 主题配置
 class ThemeConstant{
+
+  static CustomTextTheme textTheme = CustomTextTheme(
+            titleLarge: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w700),
+            titleMedium: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w700),
+            titleSmall: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+
+            labelLarge: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w400),
+            labelMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+            labelSmall: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400), 
+
+            displayLarge: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+            displayMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+            displaySmall: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),              
+          );
+
+  static  CustomButtonTextTheme buttonTextTheme = CustomButtonTextTheme(
+            buttonLarge: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+            buttonMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+            buttonSmall: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500)         
+          );
+
 
   static CustomTheme main = CustomTheme(
           primaryColor: const Color.fromARGB(255, 12, 65, 135), 
@@ -16,19 +38,8 @@ class ThemeConstant{
           labelTextColor: const Color.fromARGB(255, 145, 145, 145), 
           primaryIconColor: const Color.fromARGB(255, 30, 30, 30), 
           labelIconColor: const Color.fromARGB(255, 145, 145, 145), 
-          textTheme: const CustomTextTheme(
-            titleLarge: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 24),
-            titleMedium: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 18),
-            titleSmall: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 14),
-            labelLarge: TextStyle(fontFamily: 'PingFangSC-Light', fontSize: 18),
-            labelMedium: TextStyle(fontFamily: 'PingFangSC-Light', fontSize: 14),
-            labelSmall: TextStyle(fontFamily: 'PingFangSC-Light', fontSize: 12),            
-          ),
-          buttonTextTheme: const CustomButtonTextTheme(
-            buttonLarge: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 18),
-            buttonMedium: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 16),
-            buttonSmall: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 14)         
-          )
+          textTheme: textTheme,
+          buttonTextTheme: buttonTextTheme
         );
 
   
@@ -43,18 +54,7 @@ class ThemeConstant{
           labelTextColor: const Color.fromARGB(255, 160, 160, 160), 
           primaryIconColor: const Color.fromARGB(255, 225, 225, 225), 
           labelIconColor: const Color.fromARGB(255, 160, 160, 160), 
-          textTheme: const CustomTextTheme(
-            titleLarge: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 24),
-            titleMedium: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 18),
-            titleSmall: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 14),
-            labelLarge: TextStyle(fontFamily: 'PingFangSC-Light', fontSize: 18),
-            labelMedium: TextStyle(fontFamily: 'PingFangSC-Light', fontSize: 14),
-            labelSmall: TextStyle(fontFamily: 'PingFangSC-Light', fontSize: 12),            
-          ),
-          buttonTextTheme: const CustomButtonTextTheme(
-            buttonLarge: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 18),
-            buttonMedium: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 16),
-            buttonSmall: TextStyle(fontFamily: 'PingFangSC-Regular', fontSize: 14)         
-          )
+          textTheme: textTheme,
+          buttonTextTheme: buttonTextTheme
         );
 }
