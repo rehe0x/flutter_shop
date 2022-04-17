@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../common/screenutil/flutter_screenutil.dart';
 import '../../common/screenutil/src/size_extension.dart';
@@ -21,7 +22,36 @@ class SearchGoodsBody extends StatelessWidget {
         slivers: [
           SliverAppBar(
             backgroundColor: AppThemes.of(context).primaryBackgroundColor,
-            title: Text('ceshi' , style: TextStyle(color: Colors.green),),
+            leading: CupertinoButton(
+              padding: const EdgeInsets.all(0),
+              minSize: 0,
+              child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+              onPressed: (){
+                
+              },
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CupertinoButton(
+                  padding: const EdgeInsets.all(0),
+                  minSize: 0,
+                  child: Text('排序', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+                  onPressed: (){
+                    AppThemes.change(context, ThemeEnum.dark);
+                  },
+                ),
+                CupertinoButton(
+                  padding: const EdgeInsets.all(0),
+                  minSize: 0,
+                  child: Text('筛选', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+                  onPressed: (){
+                    AppThemes.change(context, ThemeEnum.dark);
+                  },
+                )
+              ],
+            ),
+            toolbarHeight: 40.h,
           ),
           // SliverPersistentHeader(
           //   //是否固定头布局 默认false
@@ -46,22 +76,26 @@ class SearchGoodsBody extends StatelessWidget {
           //     color: Colors.red,
           //   ),
           // ),
-          SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, index) {
-                return const _GoodsItem();
-              },
-              childCount: 60
+          SliverPadding(
+            padding: EdgeInsets.only(top: 10.r),
+            sliver: SliverFixedExtentList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, index) {
+                  return const _GoodsItem();
+                },
+                childCount: 60
+              ),
+              itemExtent: 160.h,
             ),
-            itemExtent: 120.h,
-          ), 
+          ),
+           
         ],
        ),
     );
   }
 }
 
-class MySliverPHeaderDelegate extends SliverPersistentHeaderDelegate{
+class MySliverPHeaderDelegate {
   final double minHeight; //最小高度
   final double maxHeight; //最大高度
   final Widget child; //子Widget布局
@@ -96,47 +130,76 @@ class _GoodsItem extends StatelessWidget {
   const _GoodsItem({ Key? key }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(width: 5.w,),
-        Container(
-          height: 110.r,
-          width: 110.r,
-          padding: const EdgeInsets.all(5).r,
-          decoration: BoxDecoration(
-            color: AppThemes.of(context).scaffoldAccentColor,
-            borderRadius: BorderRadius.circular(14).r
-          ),
-          child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.cover,),
-        ),
-        SizedBox(width: 10.w,),
-      
-        Expanded(
-          
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children:  [
-              Text(
-              '距离圣诞节福利时间到风口浪尖上端口浪费建设快乐的肌肤脸上的肌肤框脸上的肌肤来说',
-               maxLines: 2, 
-               overflow: TextOverflow.ellipsis,
-               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.sp
-               ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children:[
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(width: 5.w,),
+            Container(
+              height: 110.r,
+              width: 110.r,
+              decoration: BoxDecoration(
+                color: AppThemes.of(context).scaffoldAccentColor,
+                borderRadius: BorderRadius.circular(14).r
               ),
-              Text('data'),
-              Text('data'),
-              Text('data'),
-              // Text('data'),
-              // Text('data'),
-              
-            ],
-          ),
+              child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.contain,),
+            ),
+            SizedBox(width: 10.w,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:  [
+                  Text(
+                  '距离圣诞节福利时间到风口浪尖上端口浪费建设快乐的肌肤脸上的肌肤框脸上的肌肤来说',
+                  maxLines: 2, 
+                  overflow: TextOverflow.ellipsis,
+                  style: AppThemes.of(context).textTheme.titleSmall
+                  ),
+                  Text(
+                    '测试｜不错｜22*333',
+                    style: AppThemes.of(context).textTheme.displayMedium,
+                  ),
+                  Text(
+                    '测试｜不错｜22*333',
+                    style: AppThemes.of(context).textTheme.displayMedium,
+                  ),
+                
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '3322',
+                            style: AppThemes.of(context).textTheme.displayMedium,
+                          ),
+                          Text(
+                            '33342.44元',
+                            style: AppThemes.of(context).textTheme.titleSmall,
+                          ),
+                        ],
+                      ),
+                      CupertinoButton(
+                        color: AppThemes.of(context).primaryColor,
+                        padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                        minSize: 35,
+                        child: Text('加入购物车', style: TextStyle(fontSize: 12, color: AppThemes.of(context).primaryAccentColor),),
+                        onPressed: (){},
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+        Divider(
+          color: AppThemes.of(context).labelTextColor,
         )
-      ],
+      ]
     );
   }
 }

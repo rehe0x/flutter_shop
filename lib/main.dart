@@ -5,7 +5,6 @@ import 'provider/app_provider.dart';
 import 'provider/navigation_provider.dart';
 import 'routes/delegate.dart';
 import 'routes/parser.dart';
-import 'common/screenutil/flutter_screenutil.dart';
 
 
 void main() async{
@@ -18,7 +17,6 @@ void main() async{
   //     );
   //     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   // }
-  await ScreenUtil.ensureScreenSize();
   runApp(
     MultiProvider(
       providers: [

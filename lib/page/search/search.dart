@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
 
 import 'search_body.dart';
 import 'search_goods.dart';
@@ -15,6 +16,7 @@ class Search extends StatelessWidget {
       backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: const SearchField(height: 40, autofocus: true),
+        toolbarHeight: 45.h,
         backgroundColor: AppThemes.of(context).primaryBackgroundColor,
         elevation: 0.0,
       ),

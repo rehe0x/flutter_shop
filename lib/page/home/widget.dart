@@ -38,44 +38,41 @@ class MenuList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0).r,
-      sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,//按2列展示
-          mainAxisSpacing: 0,//主轴边距
-          crossAxisSpacing: 20,//纵轴边距
-          childAspectRatio: 0.8,//宽高比3:1
-        ),
+    return SliverGrid(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,//按2列展示
+        mainAxisSpacing: 0,//主轴边距
+        crossAxisSpacing: 20,//纵轴边距
+        childAspectRatio: 0.8,//宽高比3:1
+      ),
 
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context,int index){
-            return Container(
-              // color: Colors.red,
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(150.r),
-                    child: LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) { 
-                        return Container(
-                          height: constraints.biggest.width.w,
-                          decoration: BoxDecoration(
-                            color: Colors.blue[100*(index+1%20)],
-                          ),
-                          child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.contain,)
-                        );
-                     },
-                    )
-                  ),
-                  Text('菜单呢', style: AppThemes.of(context).textTheme.labelMedium,),
-                ],
-              ),
-            );
-          },
-          childCount: 3,
-        ),
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context,int index){
+          return Container(
+            // color: Colors.red,
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(150.r),
+                  child: LayoutBuilder(
+                    builder: (BuildContext context, BoxConstraints constraints) { 
+                      return Container(
+                        height: constraints.biggest.width.w,
+                        decoration: BoxDecoration(
+                          color: Colors.blue[100*(index+1%20)],
+                        ),
+                        child: Image.network('https://static.runoob.com/images/demo/demo2.jpg',fit: BoxFit.contain,)
+                      );
+                    },
+                  )
+                ),
+                Text('菜单呢', style: AppThemes.of(context).textTheme.labelMedium,),
+              ],
+            ),
+          );
+        },
+        childCount: 3,
       ),
     );
   }
@@ -89,31 +86,28 @@ class GroupHorizontalTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 15, 0).r,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(title, style: AppThemes.of(context).textTheme.titleLarge),
-          CupertinoButton(
-            padding: const EdgeInsets.all(0),
-            minSize: 0,
-            child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-            onPressed: (){
-              AppRouterDelegate.of(context).push(name: '/test1');
-            },
-          ),
-          CupertinoButton(
-            padding: const EdgeInsets.all(0),
-            minSize: 0,
-            child: Text('切换主题', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-            onPressed: (){
-              AppThemes.change(context, ThemeEnum.dark);
-            },
-          )
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(title, style: AppThemes.of(context).textTheme.titleLarge),
+        CupertinoButton(
+          padding: const EdgeInsets.all(0),
+          minSize: 0,
+          child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+          onPressed: (){
+            AppRouterDelegate.of(context).push(name: '/test1');
+          },
+        ),
+        CupertinoButton(
+          padding: const EdgeInsets.all(0),
+          minSize: 0,
+          child: Text('切换主题', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+          onPressed: (){
+            AppThemes.change(context, ThemeEnum.dark);
+          },
+        )
+      ],
     );
   }
 }
@@ -128,10 +122,10 @@ class GroupHorizontalList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0).r,
+      padding: const EdgeInsets.only(left: 15, right: 15).r,
       child: Row(
         children: ListUtil.generate(
-          length: 30,
+          length: 10,
           item: (index) => GoodsItem(goodsName: index),
           separator: (index) => SizedBox(width: 15.w,)
         )
@@ -186,31 +180,28 @@ class ActivityGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0).r,
-      child: Stack(
-        children: [
-          Container(
-            height: 250.h,
-            width: double.infinity,
-            color: Colors.blueAccent,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0).r,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('来看一看', style: AppThemes.of(context).textTheme.titleLarge,),
-                  Text('买不来？', style: AppThemes.of(context).textTheme.titleMedium,)
-                ],
-              ),
-            )
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 150).r,
-            child: const GroupHorizontalList(),
+    return Stack(
+      children: [
+        Container(
+          height: 250.h,
+          width: double.infinity,
+          color: Colors.blueAccent,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0).r,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('来看一看', style: AppThemes.of(context).textTheme.titleLarge,),
+                Text('买不来？', style: AppThemes.of(context).textTheme.titleMedium,)
+              ],
+            ),
           )
-        ],
-      ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 150).r,
+          child: const GroupHorizontalList(),
+        )
+      ],
     );
   }
 }

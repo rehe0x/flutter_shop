@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// 自定义主题模型
@@ -174,4 +175,13 @@ class CustomButtonTextTheme {
     required this.buttonSmall,
   });
 }
+
+
+/// 背景按钮大中小标题 主题色
+// class CustomButtonFilledTheme {
+//   final TextStyle buttonLarge;
+//   final TextStyle buttonMedium;
+//   final TextStyle buttonSmall;
+// }
+
 

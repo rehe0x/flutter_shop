@@ -47,7 +47,7 @@ class AppIndex extends StatelessWidget {
         textTheme: CupertinoTextThemeData(
           tabLabelTextStyle: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 12.sp
+            fontSize: 10.sp
           )
         )
       ),

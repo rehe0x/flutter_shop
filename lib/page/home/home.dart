@@ -71,57 +71,71 @@ class _MyCustomScrollView extends StatelessWidget {
             child: home_widget.Banner(),
           ),
         ),
-        const home_widget.MenuList(),
-        const SliverToBoxAdapter(
-          child: home_widget.GroupHorizontalTitle(title: '日常',),
-        ),
-        const SliverToBoxAdapter(
-          child: home_widget.GroupHorizontalList()
-        ),
-        
-        const SliverToBoxAdapter(
-          child: home_widget.ActivityGroup()
-        ),
-        const SliverToBoxAdapter(
-          child: home_widget.ActivityGroup()
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(15, 30, 15, 0).r,
+          sliver: const home_widget.MenuList(),
         ),
         SliverPadding(
-            padding: const EdgeInsets.all(50),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,//按2列展示
-                mainAxisSpacing: 5,//主轴边距
-                crossAxisSpacing: 5,//纵轴边距
-                childAspectRatio: 3,//宽高比3:1
-              ),
+          padding: const EdgeInsets.fromLTRB(15, 30, 15, 0).r,
+          sliver: const SliverToBoxAdapter(
+            child: home_widget.GroupHorizontalTitle(title: '日常',),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 15).r,
+          sliver: const SliverToBoxAdapter(
+            child: home_widget.GroupHorizontalList(),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 40).r,
+          sliver: const SliverToBoxAdapter(
+            child: home_widget.ActivityGroup(),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 40, bottom: 40).r,
+          sliver: const SliverToBoxAdapter(
+            child: home_widget.ActivityGroup(),
+          ),
+        ),
+        // SliverPadding(
+        //     padding: const EdgeInsets.all(50),
+        //     sliver: SliverGrid(
+        //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //         crossAxisCount: 2,//按2列展示
+        //         mainAxisSpacing: 5,//主轴边距
+        //         crossAxisSpacing: 5,//纵轴边距
+        //         childAspectRatio: 3,//宽高比3:1
+        //       ),
 
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context,int index){
-                  return Container(
-                    alignment: Alignment.center,
-                    color: Colors.blue[100*(index%8)],
-                    child: Text("我是Item  $index"),
-                  );
-                },
-                childCount: 36,
-              ),
-            ),
-          ),
-        SliverSafeArea(
-          sliver: SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(
-                  (BuildContext context,int index){
-                return Container(
-                  alignment: Alignment.center,
-                  color: Colors.yellow[100*(index%8)],
-                  child: Text("一百零八将  $index"),
-                );
-              },
-              childCount: 108,
-            ),
-            itemExtent: 30,//高度为30
-          ),
-        )
+        //       delegate: SliverChildBuilderDelegate(
+        //         (BuildContext context,int index){
+        //           return Container(
+        //             alignment: Alignment.center,
+        //             color: Colors.blue[100*(index%8)],
+        //             child: Text("我是Item  $index"),
+        //           );
+        //         },
+        //         childCount: 36,
+        //       ),
+        //     ),
+        //   ),
+        // SliverSafeArea(
+        //   sliver: SliverFixedExtentList(
+        //     delegate: SliverChildBuilderDelegate(
+        //           (BuildContext context,int index){
+        //         return Container(
+        //           alignment: Alignment.center,
+        //           color: Colors.yellow[100*(index%8)],
+        //           child: Text("一百零八将  $index"),
+        //         );
+        //       },
+        //       childCount: 108,
+        //     ),
+        //     itemExtent: 30,//高度为30
+        //   ),
+        // )
          
       ],
     );
