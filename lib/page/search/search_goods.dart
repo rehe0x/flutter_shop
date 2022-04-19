@@ -6,91 +6,128 @@ import 'package:flutter/material.dart';
 import '../../common/screenutil/flutter_screenutil.dart';
 import '../../common/screenutil/src/size_extension.dart';
 import '../../theme/themes.dart';
+import '../../widget/animated.dart';
+import '../../widget/refresh_loading.dart';
 
 /// 搜索页商品内容
 class SearchGoodsBody extends StatelessWidget {
   const SearchGoodsBody({ Key? key }) : super(key: key);
+  
+ Future<void> fetchData() async{
+    await Future.delayed(const Duration(milliseconds: 1500));
+    return Future.value(null);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
        backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
-       body: CustomScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics()
-        ),
-        slivers: [
-          SliverAppBar(
-            backgroundColor: AppThemes.of(context).primaryBackgroundColor,
-            leading: CupertinoButton(
-              padding: const EdgeInsets.all(0),
-              minSize: 0,
-              child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-              onPressed: (){
-                
-              },
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CupertinoButton(
-                  padding: const EdgeInsets.all(0),
-                  minSize: 0,
-                  child: Text('排序', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-                  onPressed: (){
-                    AppThemes.change(context, ThemeEnum.dark);
-                  },
+       body: FutureBuilder(
+         future: fetchData(),
+         builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if(snapshot.connectionState == ConnectionState.done) {
+            return const GoodsBody();
+          }else{
+            return Center(
+              child: Container(
+                width: 50.r,
+                height: 50.r,
+                child: RingInsideLoading(
+                  color: AppThemes.of(context).primaryColor,
+                  backgroundColor: AppThemes.of(context).scaffoldAccentColor,
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.linear,
+                  strokeWidth: 3.r,
                 ),
-                CupertinoButton(
-                  padding: const EdgeInsets.all(0),
-                  minSize: 0,
-                  child: Text('筛选', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-                  onPressed: (){
-                    AppThemes.change(context, ThemeEnum.dark);
-                  },
-                )
-              ],
-            ),
-            toolbarHeight: 40.h,
-          ),
-          // SliverPersistentHeader(
-          //   //是否固定头布局 默认false
-          //   pinned: false,
-          //   //是否浮动 默认false
-          //   floating: false,
-          //   //必传参数,头布局内容
-          //   delegate: MySliverPHeaderDelegate(
-          //     //缩小后的布局高度
-          //     minHeight: 0.0,
-          //     //展开后的高度
-          //     maxHeight: 40.0, 
-          //     child: Container(
-          //       color: Colors.white,
-          //       child: Text('是登陆福建多少垃圾分类是宽度减肥'),
-          //     ),
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: Container(
-          //     height: 30,
-          //     color: Colors.red,
-          //   ),
-          // ),
-          SliverPadding(
-            padding: EdgeInsets.only(top: 10.r),
-            sliver: SliverFixedExtentList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, index) {
-                  return const _GoodsItem();
-                },
-                childCount: 60
               ),
-              itemExtent: 160.h,
-            ),
+            );
+          }
+        }
+      ),
+    );
+  }
+}
+
+class GoodsBody extends StatelessWidget {
+  const GoodsBody({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
+      slivers: [
+        SliverAppBar(
+          backgroundColor: AppThemes.of(context).primaryBackgroundColor,
+          leading: CupertinoButton(
+            padding: const EdgeInsets.all(0),
+            minSize: 0,
+            child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+            onPressed: (){
+              
+            },
           ),
-           
-        ],
-       ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CupertinoButton(
+                padding: const EdgeInsets.all(0),
+                minSize: 0,
+                child: Text('排序', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+                onPressed: (){
+                  AppThemes.change(context, ThemeEnum.dark);
+                },
+              ),
+              CupertinoButton(
+                padding: const EdgeInsets.all(0),
+                minSize: 0,
+                child: Text('筛选', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+                onPressed: (){
+                  AppThemes.change(context, ThemeEnum.dark);
+                },
+              )
+            ],
+          ),
+          toolbarHeight: 40.h,
+        ),
+        const RefreshAnimated(),
+        // SliverPersistentHeader(
+        //   //是否固定头布局 默认false
+        //   pinned: false,
+        //   //是否浮动 默认false
+        //   floating: false,
+        //   //必传参数,头布局内容
+        //   delegate: MySliverPHeaderDelegate(
+        //     //缩小后的布局高度
+        //     minHeight: 0.0,
+        //     //展开后的高度
+        //     maxHeight: 40.0, 
+        //     child: Container(
+        //       color: Colors.white,
+        //       child: Text('是登陆福建多少垃圾分类是宽度减肥'),
+        //     ),
+        //   ),
+        // ),
+        // SliverToBoxAdapter(
+        //   child: Container(
+        //     height: 30,
+        //     color: Colors.red,
+        //   ),
+        // ),
+        SliverPadding(
+          padding: EdgeInsets.only(top: 10.r),
+          sliver: SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, index) {
+                return const _GoodsItem();
+              },
+              childCount: 60
+            ),
+            itemExtent: 160.h,
+          ),
+        ),
+      ],
     );
   }
 }

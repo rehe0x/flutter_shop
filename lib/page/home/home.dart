@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../common/screenutil/src/size_extension.dart';
 
 import '../../theme/themes.dart';
+import '../../widget/refresh_loading.dart';
 import '../../widget/search_field.dart';
 import '../../page/home/widget.dart' as home_widget;
 
@@ -65,6 +67,7 @@ class _MyCustomScrollView extends StatelessWidget {
             ),
           ),
         ),
+        const RefreshAnimated(),
         SliverPadding(
           padding: EdgeInsets.only(top: 10.r),
           sliver: const SliverToBoxAdapter(
