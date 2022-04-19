@@ -1,15 +1,14 @@
 
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
-import 'package:provider/provider.dart';
 
+import '../common/screenutil/src/size_extension.dart';
 import '../common/screenutil/src/screen_util.dart';
+import '../provider/app_global.dart';
 import 'home/home.dart';
 import 'search/search.dart';
 import '../theme/themes.dart';
 import '../constant/custom_icons.dart';
-import '../provider/navigation_provider.dart';
 
 /// 首页保护底部菜单脚手架ios风格
 class AppIndex extends StatelessWidget {
@@ -40,8 +39,6 @@ class AppIndex extends StatelessWidget {
       orientation: Orientation.portrait);
       
     debugPrint('w=${100.w}, h=${100.h}, r=${100.r}, sp= ${100.sp}, pixelRatio=${ScreenUtil().pixelRatio}, screenWidth=${ScreenUtil().screenWidth}, screenHeight=${ScreenUtil().screenHeight}');
-    /// 全局TabController
-    final CupertinoTabController cupertinoTabController = Provider.of<NavigationProvider>(context, listen: false).cupertinoTabController;
     return CupertinoTheme(
       data: CupertinoThemeData(
         textTheme: CupertinoTextThemeData(
@@ -52,7 +49,7 @@ class AppIndex extends StatelessWidget {
         )
       ),
       child: CupertinoTabScaffold(
-          controller: cupertinoTabController,
+          controller: AppGlobal.cupertinoTabController,
           tabBar: CupertinoTabBar(
             backgroundColor: AppThemes.of(context).primaryBackgroundColor,
             inactiveColor: AppThemes.of(context).bottomAppBarColor,
@@ -64,7 +61,7 @@ class AppIndex extends StatelessWidget {
             onTap: (int index){
               /// 如果是搜索页 默认打开搜索框焦点
               if (index == 2) {
-                Provider.of<NavigationProvider>(context, listen: false).updateSearchFocus(true);
+                AppGlobal.updateSearchFocus(true);
               }
             },
           ),

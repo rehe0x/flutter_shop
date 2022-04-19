@@ -15,8 +15,8 @@ class ThemeConstant{
             labelMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
             labelSmall: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400), 
 
-            displayLarge: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
-            displayMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+            displayLarge: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+            displayMedium: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
             displaySmall: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),              
           );
 

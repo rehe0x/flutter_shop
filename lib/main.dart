@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/app_provider.dart';
-import 'provider/navigation_provider.dart';
 import 'routes/delegate.dart';
 import 'routes/parser.dart';
 
@@ -20,7 +19,6 @@ void main() async{
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => NavigationProvider()),
         ChangeNotifierProvider(create: (context) => AppThemeProvider())
       ],
       child: MyApp(),
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Shop',
       theme: ThemeData(
         // backgroundColor: AppThemes.of(context).primaryBackgroundColor
-        // primaryColor: AppThemes.of(context).primaryColor,
+        // primaryColor: AppThemeProvider.testTheme.primaryColor,
         // colorScheme: ThemeData().colorScheme.copyWith(
         //   primary: AppThemes.of(context).primaryColor,
         // ),

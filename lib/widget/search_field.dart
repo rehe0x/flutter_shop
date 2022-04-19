@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
-import 'package:provider/provider.dart';
+import '../common/screenutil/src/size_extension.dart';
 
 
 import '../constant/custom_icons.dart';
+import '../provider/app_global.dart';
 import '../theme/themes.dart';
-import '../provider/navigation_provider.dart';
+
+
+typedef OnEditingCompleteCallback = void Function();
 
 /// 搜索导航组件
 class SearchField extends StatefulWidget {
@@ -17,8 +19,11 @@ class SearchField extends StatefulWidget {
   final bool readOnly;
   // 是否默认打开焦点
   final bool autofocus;
+
+  final OnEditingCompleteCallback? onEditingComplete;
   const SearchField({Key? key, this.width, this.height,
    this.readOnly = false, this.autofocus = false,
+    this.onEditingComplete,
    }) : super(key: key);
 
   @override
@@ -31,18 +36,16 @@ class _SearchFieldState extends State<SearchField> {
   final TextEditingController _textEditingController = TextEditingController();
   
   /// 获取全局处理对象
-  late final NavigationProvider _navigationBarProvider;
   late final FocusNode _focusNode;
 
   bool _focus = false;
 
+
   @override
   void initState (){
     super.initState();
-    //  获取Provider 类
-    _navigationBarProvider = Provider.of<NavigationProvider>(context, listen: false);
     // 搜索页键盘事件用Provider FocusNode 为了从首页点过去每次都获取焦点
-    _focusNode = widget.autofocus ? _navigationBarProvider.searchFocusNode : FocusNode();
+    _focusNode = widget.autofocus ? AppGlobal.searchFocusNode : FocusNode();
     _focusNodeAddListener();
   }
   
@@ -50,13 +53,18 @@ class _SearchFieldState extends State<SearchField> {
   _focusNodeAddListener(){
     _focusNode.addListener(() {
       // 点击首页搜索框切换到搜索页
-      if (_focusNode.hasFocus && _navigationBarProvider.cupertinoTabController.index != 2) {
+      if (_focusNode.hasFocus && AppGlobal.cupertinoTabController.index != 2) {
         // 关闭首页键盘焦点
         _focusNode.unfocus();
         // 打开搜索页焦点
-        _navigationBarProvider.updateSearchFocus(true);
+        AppGlobal.updateSearchFocus(true);
         // 跳转搜索页
-        _navigationBarProvider.updateTabIndex(2);
+        AppGlobal.updateTabIndex(2);
+      }
+      /// 如果是列表获取焦点跳转到上一页
+      if (AppGlobal.appRouterDelegate.lastPage().name == '/goods' 
+          && _focusNode.hasFocus) {
+        AppGlobal.appRouterDelegate.pop();
       }
       setState(() {
         _focus = _focusNode.hasFocus;
@@ -79,10 +87,15 @@ class _SearchFieldState extends State<SearchField> {
   void dispose() {
     super.dispose();
     _focusNode.dispose();
-    _navigationBarProvider.dispose();
     _textEditingController.dispose();
   }
 
+
+  void toSearchGoods(){
+    _focusNode.unfocus();
+    // AppGlobal.pushNamed('goods_item');
+    AppGlobal.appRouterDelegate.push(name: '/goods');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +151,11 @@ class _SearchFieldState extends State<SearchField> {
                 ) : Icon(CustomIcons.scan, color: AppThemes.of(context).labelIconColor),
                 suffixIconConstraints: _focus ? const BoxConstraints() : null
               ),
+              onEditingComplete: (){
+                if (_textEditingController.text != '') {
+                  toSearchGoods();
+                }
+              },
             ),
           ),
         ),

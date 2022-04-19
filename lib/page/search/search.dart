@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
-
-import 'search_body.dart';
-import 'search_goods.dart';
+import '../../common/screenutil/src/size_extension.dart';
+import '../../provider/app_global.dart';
 import '../../theme/themes.dart';
 import '../../widget/search_field.dart';
 
@@ -30,28 +27,37 @@ class _SearchRoute extends StatelessWidget {
   const _SearchRoute({Key? key}) : super(key: key);
 
  
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Navigator(
+  //     key: AppGlobal.searchNavigatorKey,
+  //     initialRoute: 'search',
+  //     // 键盘事件
+  //     requestFocus: false,
+  //     onGenerateRoute: (RouteSettings settings) {
+  //       WidgetBuilder builder;
+  //       switch (settings.name) {
+  //         case 'search':
+  //           builder = (BuildContext context) =>  const SearchBody();
+  //           break;
+  //         case 'goods_item':
+  //           builder = (BuildContext context) => const SearchGoodsBody();
+  //           break;
+  //         default:
+  //           builder = (BuildContext context) => const Text('404');
+  //           break;
+  //       }
+        
+  //       return  CupertinoPageRoute(builder: builder, settings: settings);
+  //     },
+  //   );
+  // }
+  /// 改用自定义路由器
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      initialRoute: 'search',
-      // 键盘事件
-      requestFocus: false,
-      onGenerateRoute: (RouteSettings settings) {
-        WidgetBuilder builder;
-        switch (settings.name) {
-          case 'search':
-            builder = (BuildContext context) =>  const SearchBody();
-            break;
-          case 'goods_item':
-            builder = (BuildContext context) => const SearchGoodsBody();
-            break;
-          default:
-            builder = (BuildContext context) => const Text('404');
-            break;
-        }
-        
-        return  CupertinoPageRoute(builder: builder, settings: settings);
-      },
+    return Router(
+      routerDelegate: AppGlobal.appRouterDelegate,
     );
   }
 }
+

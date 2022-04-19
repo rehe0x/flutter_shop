@@ -197,7 +197,7 @@ class _GoodsItem extends StatelessWidget {
           ],
         ),
         Divider(
-          color: AppThemes.of(context).labelTextColor,
+          color: AppThemes.of(context).scaffoldAccentColor,
         )
       ]
     );

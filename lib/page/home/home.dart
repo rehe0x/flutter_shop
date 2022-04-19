@@ -99,6 +99,14 @@ class _MyCustomScrollView extends StatelessWidget {
             child: home_widget.ActivityGroup(),
           ),
         ),
+        SliverToBoxAdapter(
+          child: Container(
+            width: 100.r,
+            height: 100.r,
+            color: AppThemes.of(context).primaryColor,
+
+          ),
+        )
         // SliverPadding(
         //     padding: const EdgeInsets.all(50),
         //     sliver: SliverGrid(
