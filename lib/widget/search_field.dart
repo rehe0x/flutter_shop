@@ -91,9 +91,10 @@ class _SearchFieldState extends State<SearchField> {
   }
 
 
-  void toSearchGoods(){
+  void toSearchGoods() async{
     _focusNode.unfocus();
-    // AppGlobal.pushNamed('goods_item');
+    // 关闭键盘延迟一下 避免加载动画飘逸
+    await Future.delayed(const Duration(milliseconds: 150));    
     AppGlobal.appRouterDelegate.push(name: '/goods');
   }
 

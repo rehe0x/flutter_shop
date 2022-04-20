@@ -19,7 +19,16 @@ class AppThemes {
   
   /// 获取全局主题对象 问题 调用次数太多 改用静态变量 不行
   static CustomTheme of(BuildContext context){
+    
     AppThemeProvider appThemeProvider = Provider.of<AppThemeProvider>(context, listen: true);
+    debugPrint('CustomTheme.of: ${appThemeProvider.themeEnum.name}');
+    // themeData = _themes[appThemeProvider.themeEnum]!;
+    return _themes[appThemeProvider.themeEnum]!;
+  }
+
+    /// 获取全局主题对象 问题 调用次数太多 改用静态变量 不行
+  static CustomTheme read(BuildContext context){
+    AppThemeProvider appThemeProvider = context.read<AppThemeProvider>();
     debugPrint('CustomTheme.of: ${appThemeProvider.themeEnum.name}');
     // themeData = _themes[appThemeProvider.themeEnum]!;
     return _themes[appThemeProvider.themeEnum]!;

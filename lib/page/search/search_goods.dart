@@ -6,46 +6,148 @@ import 'package:flutter/material.dart';
 import '../../common/screenutil/flutter_screenutil.dart';
 import '../../common/screenutil/src/size_extension.dart';
 import '../../theme/themes.dart';
-import '../../widget/animated.dart';
 import '../../widget/refresh_loading.dart';
 
 /// 搜索页商品内容
-class SearchGoodsBody extends StatelessWidget {
-  const SearchGoodsBody({ Key? key }) : super(key: key);
-  
- Future<void> fetchData() async{
-    await Future.delayed(const Duration(milliseconds: 1500));
-    return Future.value(null);
+class SearchGoodsBody extends StatefulWidget {
+   const SearchGoodsBody({ Key? key }) : super(key: key);
+
+  @override
+  State<SearchGoodsBody> createState() => _SearchGoodsBodyState();
+}
+
+class _SearchGoodsBodyState extends State<SearchGoodsBody> {
+  /// 流程控制 淡入效果
+  fetchData() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 100));
   }
 
+  // @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
-       body: FutureBuilder(
-         future: fetchData(),
-         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if(snapshot.connectionState == ConnectionState.done) {
-            return const GoodsBody();
-          }else{
-            return Center(
-              child: Container(
-                width: 50.r,
-                height: 50.r,
-                child: RingInsideLoading(
-                  color: AppThemes.of(context).primaryColor,
-                  backgroundColor: AppThemes.of(context).scaffoldAccentColor,
-                  duration: const Duration(milliseconds: 800),
-                  curve: Curves.linear,
-                  strokeWidth: 3.r,
-                ),
-              ),
-            );
-          }
-        }
-      ),
+      backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            sliverAppBar(context)      
+          ];
+        },
+        body: OpenPageFade(
+          fetchData: fetchData(),
+          builder: (BuildContext context) {
+            return goodsList(context);
+          },
+        ),
+      )
     );
   }
+
+  Widget goodsList(BuildContext context){
+    return CustomScrollView(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
+      slivers: [
+        const RefreshAnimated(),
+        SliverPadding(
+          padding: EdgeInsets.only(top: 10.r),
+          sliver: SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, index) {
+                return const _GoodsItem();
+              },
+              childCount: 60
+            ),
+            itemExtent: 160.h,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget sliverAppBar(BuildContext context){
+    return  SliverAppBar(
+      backgroundColor: AppThemes.of(context).primaryBackgroundColor,
+      leading: CupertinoButton(
+        padding: const EdgeInsets.all(0),
+        minSize: 0,
+        child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+        onPressed: (){
+          
+        },
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CupertinoButton(
+            padding: const EdgeInsets.all(0),
+            minSize: 0,
+            child: Text('排序', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+            onPressed: (){
+              showBottomSheet();
+            },
+          ),
+          CupertinoButton(
+            padding: const EdgeInsets.all(0),
+            minSize: 0,
+            child: Text('筛选', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+            onPressed: (){
+              AppThemes.change(context, ThemeEnum.dark);
+            },
+          )
+        ],
+      ),
+      toolbarHeight: 40.h,
+    );
+  }
+
+  //显示底部弹框的功能
+ void showBottomSheet() {
+   //用于在底部打开弹框的效果
+   showModalBottomSheet(builder: (BuildContext context) {
+     //构建弹框中的内容
+     return buildBottomSheetWidget(context);
+   }, context: context,useRootNavigator: true);
+ }
+ Widget buildBottomSheetWidget(BuildContext context) {
+   //弹框中内容  310 的调试
+   return Container(
+     height: 310,
+     
+     child: Column(
+       children: [
+         InkWell(
+             onTap: () {
+               setState(() {
+                 Navigator.of(context).pop();
+               });
+             },
+             child: Container(
+               child: Text("确定"),
+               height: 44,
+               alignment: Alignment.center,
+             ),),
+
+        //  Container(color: Colors.grey[300],height: 8,),
+
+         //取消按钮
+         //添加个点击事件
+         InkWell(
+             onTap: () {
+               Navigator.of(context).pop();
+             },
+             child: Container(
+               child: Text("取消"),
+               height: 44,
+               alignment: Alignment.center,
+             ),)
+       ],
+     ),
+   );
+ }
+ 
 }
 
 class GoodsBody extends StatelessWidget {

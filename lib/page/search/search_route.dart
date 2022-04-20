@@ -19,7 +19,7 @@ class RouteHandle{
         child = const SearchBody();
         break;
       case '/goods':
-        child = const SearchGoodsBody();
+        child =  SearchGoodsBody();
         break;
       default:
         child = const Scaffold();
