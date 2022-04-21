@@ -67,7 +67,11 @@ class _MyCustomScrollView extends StatelessWidget {
             ),
           ),
         ),
-        const RefreshAnimated(),
+        RefreshAnimated(
+          fetchData: () async{
+            await Future<void>.delayed(const Duration(milliseconds: 1000));
+          },
+        ),
         SliverPadding(
           padding: EdgeInsets.only(top: 10.r),
           sliver: const SliverToBoxAdapter(

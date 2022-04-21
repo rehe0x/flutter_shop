@@ -62,9 +62,9 @@ class _SearchFieldState extends State<SearchField> {
         AppGlobal.updateTabIndex(2);
       }
       /// 如果是列表获取焦点跳转到上一页
-      if (AppGlobal.appRouterDelegate.lastPage().name == '/goods' 
+      if (AppGlobal.searchRouterDelegate.lastPage().name == '/goods' 
           && _focusNode.hasFocus) {
-        AppGlobal.appRouterDelegate.pop();
+        AppGlobal.searchRouterDelegate.pop();
       }
       setState(() {
         _focus = _focusNode.hasFocus;
@@ -95,7 +95,7 @@ class _SearchFieldState extends State<SearchField> {
     _focusNode.unfocus();
     // 关闭键盘延迟一下 避免加载动画飘逸
     await Future.delayed(const Duration(milliseconds: 150));    
-    AppGlobal.appRouterDelegate.push(name: '/goods');
+    AppGlobal.searchRouterDelegate.push(name: '/goods');
   }
 
   @override

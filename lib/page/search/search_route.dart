@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../provider/app_global.dart';
 import 'search_body.dart';
 import 'search_goods.dart';
 
@@ -37,17 +36,17 @@ class RouteHandle{
 
 
 /// 自定义路由代理
-class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
+class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
     with PopNavigatorRouterDelegateMixin<List<RouteSettings>>, ChangeNotifier {
   
   /// 路由列表
   final  List<Page<dynamic>> _pages = [RouteHandle.createPage(const RouteSettings(name: '/search',arguments: null))];
 
   /// 获取路由代理对象
-  static AppRouterDelegate of(BuildContext context) {
+  static SearchRouterDelegate of(BuildContext context) {
     final delegate = Router.of(context).routerDelegate;
-    assert(delegate is AppRouterDelegate, 'Delegate type must match');
-    return delegate as AppRouterDelegate;
+    assert(delegate is SearchRouterDelegate, 'Delegate type must match');
+    return delegate as SearchRouterDelegate;
   }
 
   @override

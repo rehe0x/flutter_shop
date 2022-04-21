@@ -56,7 +56,7 @@ class _SearchRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Router(
-      routerDelegate: AppGlobal.appRouterDelegate,
+      routerDelegate: AppGlobal.searchRouterDelegate,
     );
   }
 }

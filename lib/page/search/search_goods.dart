@@ -1,8 +1,9 @@
 
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../provider/app_global.dart';
 import '../../common/screenutil/flutter_screenutil.dart';
 import '../../common/screenutil/src/size_extension.dart';
 import '../../theme/themes.dart';
@@ -10,76 +11,76 @@ import '../../widget/refresh_loading.dart';
 
 /// 搜索页商品内容
 class SearchGoodsBody extends StatefulWidget {
-   const SearchGoodsBody({ Key? key }) : super(key: key);
-
+  const SearchGoodsBody({ Key? key }) : super(key: key);
   @override
   State<SearchGoodsBody> createState() => _SearchGoodsBodyState();
 }
 
 class _SearchGoodsBodyState extends State<SearchGoodsBody> {
-  /// 流程控制 淡入效果
-  fetchData() async {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  int _id = 0;
+  /// 异步请求数据
+  Future<void> fetchData() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     await Future.delayed(const Duration(milliseconds: 100));
   }
 
-  // @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
       body: NestedScrollView(
+        /// 头部
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             sliverAppBar(context)      
           ];
         },
-        body: OpenPageFade(
-          fetchData: fetchData(),
-          builder: (BuildContext context) {
-            return goodsList(context);
-          },
+        /// 内容
+        body: CustomScrollFadePage(
+          fetchData: fetchData,
+          slivers: [
+            SliverPadding(
+              padding: EdgeInsets.only(top: 10.r),
+              sliver: goodsList(context),
+            )
+          ],
         ),
-      )
+      ),
+      endDrawer: const Drawer(child: Text('过滤条件'),),
+      endDrawerEnableOpenDragGesture: false,
     );
   }
 
+  /// 商品列表
   Widget goodsList(BuildContext context){
-    return CustomScrollView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
+    return SliverFixedExtentList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, index) {
+          return _GoodsItem(id: index * _id,);
+        },
+        childCount: 60
       ),
-      slivers: [
-        const RefreshAnimated(),
-        SliverPadding(
-          padding: EdgeInsets.only(top: 10.r),
-          sliver: SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, index) {
-                return const _GoodsItem();
-              },
-              childCount: 60
-            ),
-            itemExtent: 160.h,
-          ),
-        ),
-      ],
+      itemExtent: 160.h,
     );
   }
 
   Widget sliverAppBar(BuildContext context){
     return  SliverAppBar(
+      actions: const [Text('')],
       backgroundColor: AppThemes.of(context).primaryBackgroundColor,
       leading: CupertinoButton(
         padding: const EdgeInsets.all(0),
         minSize: 0,
-        child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+        child: Text('返回', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
         onPressed: (){
-          
+          AppGlobal.searchRouterDelegate.pop();
         },
       ),
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           CupertinoButton(
             padding: const EdgeInsets.all(0),
@@ -89,12 +90,13 @@ class _SearchGoodsBodyState extends State<SearchGoodsBody> {
               showBottomSheet();
             },
           ),
+          SizedBox(width: 30.w,),
           CupertinoButton(
             padding: const EdgeInsets.all(0),
             minSize: 0,
-            child: Text('筛选', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+            child: Text('过滤条件', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
             onPressed: (){
-              AppThemes.change(context, ThemeEnum.dark);
+              _scaffoldKey.currentState!.openEndDrawer();
             },
           )
         ],
@@ -104,169 +106,82 @@ class _SearchGoodsBodyState extends State<SearchGoodsBody> {
   }
 
   //显示底部弹框的功能
- void showBottomSheet() {
-   //用于在底部打开弹框的效果
-   showModalBottomSheet(builder: (BuildContext context) {
-     //构建弹框中的内容
-     return buildBottomSheetWidget(context);
-   }, context: context,useRootNavigator: true);
- }
- Widget buildBottomSheetWidget(BuildContext context) {
-   //弹框中内容  310 的调试
-   return Container(
-     height: 310,
-     
-     child: Column(
-       children: [
-         InkWell(
-             onTap: () {
-               setState(() {
-                 Navigator.of(context).pop();
-               });
-             },
-             child: Container(
-               child: Text("确定"),
-               height: 44,
-               alignment: Alignment.center,
-             ),),
-
-        //  Container(color: Colors.grey[300],height: 8,),
-
-         //取消按钮
-         //添加个点击事件
-         InkWell(
-             onTap: () {
-               Navigator.of(context).pop();
-             },
-             child: Container(
-               child: Text("取消"),
-               height: 44,
-               alignment: Alignment.center,
-             ),)
-       ],
-     ),
-   );
- }
- 
-}
-
-class GoodsBody extends StatelessWidget {
-  const GoodsBody({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
+  void showBottomSheet() {
+    //用于在底部打开弹框的效果
+    showModalBottomSheet(
+      builder: (BuildContext context) {
+        //构建弹框中的内容
+        return buildBottomSheetWidget(context);
+      }, 
+      context: context,
+      useRootNavigator: true,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.r),
       ),
-      slivers: [
-        SliverAppBar(
-          backgroundColor: AppThemes.of(context).primaryBackgroundColor,
-          leading: CupertinoButton(
-            padding: const EdgeInsets.all(0),
-            minSize: 0,
-            child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-            onPressed: (){
-              
-            },
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CupertinoButton(
-                padding: const EdgeInsets.all(0),
-                minSize: 0,
-                child: Text('排序', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-                onPressed: (){
-                  AppThemes.change(context, ThemeEnum.dark);
-                },
-              ),
-              CupertinoButton(
-                padding: const EdgeInsets.all(0),
-                minSize: 0,
-                child: Text('筛选', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
-                onPressed: (){
-                  AppThemes.change(context, ThemeEnum.dark);
-                },
-              )
-            ],
-          ),
-          toolbarHeight: 40.h,
-        ),
-        const RefreshAnimated(),
-        // SliverPersistentHeader(
-        //   //是否固定头布局 默认false
-        //   pinned: false,
-        //   //是否浮动 默认false
-        //   floating: false,
-        //   //必传参数,头布局内容
-        //   delegate: MySliverPHeaderDelegate(
-        //     //缩小后的布局高度
-        //     minHeight: 0.0,
-        //     //展开后的高度
-        //     maxHeight: 40.0, 
-        //     child: Container(
-        //       color: Colors.white,
-        //       child: Text('是登陆福建多少垃圾分类是宽度减肥'),
-        //     ),
-        //   ),
-        // ),
-        // SliverToBoxAdapter(
-        //   child: Container(
-        //     height: 30,
-        //     color: Colors.red,
-        //   ),
-        // ),
-        SliverPadding(
-          padding: EdgeInsets.only(top: 10.r),
-          sliver: SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, index) {
-                return const _GoodsItem();
-              },
-              childCount: 60
-            ),
-            itemExtent: 160.h,
-          ),
-        ),
-      ],
     );
   }
-}
 
-class MySliverPHeaderDelegate {
-  final double minHeight; //最小高度
-  final double maxHeight; //最大高度
-  final Widget child; //子Widget布局
-
-  MySliverPHeaderDelegate({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child,);
+  Widget buildBottomSheetWidget(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20.r),
+      height: 450.h,
+      decoration: BoxDecoration(
+        color: AppThemes.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(20.r)
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('排序', style: AppThemes.of(context).textTheme.titleMedium,)
+            ],
+          ),
+          SizedBox(height: 20.h,),
+          buildSelectItem(context, 1, '最高价+最低价'),
+          Divider(
+            height: 0.h,
+            color: AppThemes.of(context).scaffoldAccentColor,
+          ),
+          buildSelectItem(context, 2, '销售量'),
+          Divider(
+            height: 0.h,
+            color: AppThemes.of(context).scaffoldAccentColor,
+          ),
+          buildSelectItem(context, 3, '订单数'),
+          Divider(
+            height: 0.h,
+            color: AppThemes.of(context).scaffoldAccentColor,
+          ),
+          buildSelectItem(context, 4, '订单数ssss'),
+        ],
+      ),
+    );
   }
-
-  @override
-  double get maxExtent => max(maxHeight, minHeight);
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  bool shouldRebuild(MySliverPHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
+  
+  int _groupValue = 1;
+  Widget buildSelectItem(BuildContext context, int value,String title){
+    return RadioListTile(
+      value: value,
+      dense: false,
+      title: Text(title, style: AppThemes.of(context).textTheme.labelMedium,),
+      controlAffinity: ListTileControlAffinity.platform,
+      activeColor: AppThemes.of(context).primaryColor,
+      groupValue: _groupValue,
+      onChanged: (v) {
+        setState(() {
+          _id = int.parse(v.toString());
+          Navigator.of(context).pop();
+          _groupValue = int.parse(v.toString());
+        });
+      });
   }
-
 }
-
 class _GoodsItem extends StatelessWidget {
-  const _GoodsItem({ Key? key }) : super(key: key);
+  final int id;
+  const _GoodsItem({required this.id, Key? key }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -291,7 +206,7 @@ class _GoodsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  [
                   Text(
-                  '距离圣诞节福利时间到风口浪尖上端口浪费建设快乐的肌肤脸上的肌肤框脸上的肌肤来说',
+                  '$id距离圣诞节福利时间到风口浪尖上端口浪费建设快乐的肌肤脸上的肌肤框脸上的肌肤来说',
                   maxLines: 2, 
                   overflow: TextOverflow.ellipsis,
                   style: AppThemes.of(context).textTheme.titleSmall
