@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import '../../common/screenutil/src/size_extension.dart';
-import 'search_route.dart';
+import '../../routes/search_delegate.dart';
 import '../../theme/themes.dart';
 
 /// 搜索页默认内容
@@ -59,7 +59,7 @@ class SearchBody extends StatelessWidget {
                   child: Text('水电费发水淀粉', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
                   onTap: (){
                     // Navigator.pushNamed(context, 'goods_item');
-                    SearchRouterDelegate.of(context).push(name: '/goods');
+                    SearchRouterDelegate.of(context).push(name: '/search/goods');
                   },
                 )
               ],

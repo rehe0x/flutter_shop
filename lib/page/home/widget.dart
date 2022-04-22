@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../common/screenutil/src/size_extension.dart';
 import '../../common/common.dart';
 import '../../theme/themes.dart';
-import '../../routes/delegate.dart';
+import '../../routes/app_delegate.dart';
 
 /// 首页轮播部件
 class Banner extends StatelessWidget {

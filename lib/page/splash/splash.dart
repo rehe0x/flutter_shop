@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/routes/delegate.dart';
+import 'package:flutter_shop/routes/app_delegate.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({ Key? key }) : super(key: key);

@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 
-import '../page/search/search_route.dart';
+import '../routes/search_delegate.dart';
 
 /// 全局tab切换 搜索页键盘焦点
 class AppGlobal{

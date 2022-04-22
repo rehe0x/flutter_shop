@@ -2,40 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/routes/routes_handle.dart';
 
-import 'search_body.dart';
-import 'search_goods.dart';
-
-/// 搜索页路由配置
-class RouteHandle{
-  /// 创建路由页
-  static Page createPage(RouteSettings routeSettings) {
-      debugPrint('_createPage$routeSettings');
-      Widget child;
-
-    switch (routeSettings.name) {
-      case '/search':
-        child = const SearchBody();
-        break;
-      case '/goods':
-        child =  SearchGoodsBody();
-        break;
-      default:
-        child = const Scaffold();
-    }
-
-    return CupertinoPage(
-      child: child,
-      key: Key(routeSettings.name!) as LocalKey,
-      name: routeSettings.name,
-      arguments: routeSettings.arguments,
-    );
-  }
-}
-
-
-
-/// 自定义路由代理
+/// 搜索页路由器
 class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
     with PopNavigatorRouterDelegateMixin<List<RouteSettings>>, ChangeNotifier {
   

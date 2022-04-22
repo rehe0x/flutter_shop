@@ -45,7 +45,7 @@ class _MyCustomScrollView extends StatelessWidget {
           // 固定导航栏
           pinned: true,
           // 滑动一点导航栏就显示 否则滑倒最顶部
-          floating: true,
+          floating: false,
           // 导航栏显示动画效果 不管滑动多少自动弹出显示
           // snap: true,
           // FlexibleSpaceBar是否和导航固定
@@ -62,7 +62,7 @@ class _MyCustomScrollView extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: AppThemes.of(context).textTheme.titleLarge
+                style: AppThemes.of(context).textTheme.titleLarge.copyWith(color: AppThemes.of(context).primaryColor)
               ),
             ),
           ),

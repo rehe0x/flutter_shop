@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/app_provider.dart';
-import 'routes/delegate.dart';
-import 'routes/parser.dart';
+import 'routes/app_delegate.dart';
 
 
 void main() async{

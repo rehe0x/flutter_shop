@@ -22,7 +22,7 @@ class AppIndex extends StatelessWidget {
 
   /// 底部菜单对应页面
   static final List<Widget> _pages = [
-    const Home(title: '首页',),
+    const Home(title: 'Logo',),
     const Home(title: '精选'),
     const Search(),
     const Home(title: '购物车'),
