@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_shop/routes/routes_handle.dart';
 import '../common/screenutil/src/size_extension.dart';
 
 
@@ -8,22 +9,19 @@ import '../constant/custom_icons.dart';
 import '../provider/app_global.dart';
 import '../theme/themes.dart';
 
-
-typedef OnEditingCompleteCallback = void Function();
-
 /// 搜索导航组件
 class SearchField extends StatefulWidget {
   final double? width;
   final double? height;
   // 是否弹出键盘 首页不弹出
   final bool readOnly;
-  // 是否默认打开焦点
-  final bool autofocus;
+  // // 是否默认打开焦点
+  // final bool autofocus;
 
-  final OnEditingCompleteCallback? onEditingComplete;
   const SearchField({Key? key, this.width, this.height,
-   this.readOnly = false, this.autofocus = false,
-    this.onEditingComplete,
+   this.readOnly = false, 
+  //  this.autofocus = false,
+    // this.onEditingComplete,
    }) : super(key: key);
 
   @override
@@ -32,50 +30,59 @@ class SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<SearchField> {
-  /// 默认controller首页用 搜索页会传一个全局controller
-  final TextEditingController _textEditingController = TextEditingController();
+ /// 搜索点击跳转到搜索页
+  FocusNode searchFocusNode = AppGlobal.searchFocusNode;
+  /// 搜索框文本处理
+  TextEditingController searchTextEditingController = AppGlobal.searchTextEditingController;
   
-  /// 获取全局处理对象
-  late final FocusNode _focusNode;
-
   bool _focus = false;
-
 
   @override
   void initState (){
-    super.initState();
+    if (widget.readOnly) {
+      searchFocusNode = FocusNode();
+      searchTextEditingController = TextEditingController();
+    }
+    debugPrint('_SearchFieldState=初始化${searchFocusNode.hasListeners}');
     // 搜索页键盘事件用Provider FocusNode 为了从首页点过去每次都获取焦点
-    _focusNode = widget.autofocus ? AppGlobal.searchFocusNode : FocusNode();
-    _focusNodeAddListener();
+    if(!searchFocusNode.hasListeners){
+      _focusNodeAddListener();
+    } 
+    super.initState();
+    
   }
-  
-  /// 监听键盘时间
+
+  /// 监听键盘事件
   _focusNodeAddListener(){
-    _focusNode.addListener(() {
+    searchFocusNode.addListener(() {
       // 点击首页搜索框切换到搜索页
-      if (_focusNode.hasFocus && AppGlobal.cupertinoTabController.index != 2) {
+      if (searchFocusNode.hasFocus && AppGlobal.cupertinoTabController.index != 2) {
         // 关闭首页键盘焦点
-        _focusNode.unfocus();
+        searchFocusNode.unfocus();
         // 打开搜索页焦点
         AppGlobal.updateSearchFocus(true);
         // 跳转搜索页
         AppGlobal.updateTabIndex(2);
       }
-      /// 如果是列表获取焦点跳转到上一页
-      if (AppGlobal.searchRouterDelegate.lastPage().name == '/search/goods' 
-          && _focusNode.hasFocus) {
+
+      if (AppGlobal.searchRouterDelegate.lastPage().name == PagesEnum.goodsList.toString().split('.').last
+          && searchFocusNode.hasFocus) {
         AppGlobal.searchRouterDelegate.pop();
       }
-      setState(() {
-        _focus = _focusNode.hasFocus;
-      });
+      /// 在setState之前判断是否mounted（没有被销毁）
+      if (mounted){
+       setState(() {
+          _focus = searchFocusNode.hasFocus;
+        });
+      }
+      
     });
   }
 
 
   //获取上下焦点
   void getFocusFunction(BuildContext context){
-    FocusScope.of(context).requestFocus(_focusNode);
+    FocusScope.of(context).requestFocus(AppGlobal.searchFocusNode);
   }
 
   //隐藏键盘而不丢失文本字段焦点：
@@ -85,22 +92,27 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   void dispose() {
+    if(widget.readOnly) {
+      searchFocusNode.dispose();
+      searchTextEditingController.dispose();
+    }
     super.dispose();
-    _focusNode.dispose();
-    _textEditingController.dispose();
+    
+    debugPrint('_SearchFieldState=销毁');
+  
   }
 
 
   void toSearchGoods() async{
-    _focusNode.unfocus();
+    AppGlobal.searchFocusNode.unfocus();
     // 关闭键盘延迟一下 避免加载动画飘逸
     await Future.delayed(const Duration(milliseconds: 150));    
-    AppGlobal.searchRouterDelegate.push(name: '/search/goods');
+    AppGlobal.searchRouterDelegate.push(pagesEnum: PagesEnum.goodsList);
   }
 
   @override
   Widget build(BuildContext context) {
-
+    print('_SearchFieldState=$_focus');
     final Container suffixIcon = Container(
         width: 20.w,
         height: 20.w,
@@ -120,15 +132,15 @@ class _SearchFieldState extends State<SearchField> {
             height: widget.height,
             width: widget.width,
             child: TextField(
-              focusNode: _focusNode,
-              controller: _textEditingController,
+              focusNode: searchFocusNode,
+              controller: searchTextEditingController,
               style: AppThemes.of(context).textTheme.titleSmall,
               cursorColor: AppThemes.of(context).primaryColor,
               textAlignVertical: TextAlignVertical.bottom,
               // 不弹出键盘
-              readOnly: widget.readOnly,
-              // 默认获取焦点
-              autofocus: widget.autofocus,
+              // readOnly: widget.readOnly,
+              // // 默认获取焦点
+              // autofocus: widget.autofocus,
               // 显示焦点
               showCursor: true,
               decoration: InputDecoration(
@@ -147,13 +159,13 @@ class _SearchFieldState extends State<SearchField> {
                 suffixIcon: _focus ? GestureDetector(
                   child: suffixIcon,
                   onTap: (){
-                    _textEditingController.clear();
+                    AppGlobal.searchTextEditingController.clear();
                   },
                 ) : Icon(CustomIcons.scan, color: AppThemes.of(context).labelIconColor),
                 suffixIconConstraints: _focus ? const BoxConstraints() : null
               ),
               onEditingComplete: (){
-                if (_textEditingController.text != '') {
+                if (AppGlobal.searchTextEditingController.text != '') {
                   toSearchGoods();
                 }
               },
@@ -166,7 +178,7 @@ class _SearchFieldState extends State<SearchField> {
            minSize: 0,
            child: Text('取消', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
            onPressed: (){
-            _focusNode.unfocus();
+            AppGlobal.searchFocusNode.unfocus();
            },
          ) : Icon(CustomIcons.cartFill, color: AppThemes.of(context).primaryIconColor,),
       ],

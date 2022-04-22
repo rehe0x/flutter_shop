@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/routes/routes_handle.dart';
 
 import '../../common/screenutil/src/size_extension.dart';
 import '../../common/common.dart';
@@ -94,7 +95,7 @@ class GroupHorizontalTitle extends StatelessWidget {
           minSize: 0,
           child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
           onPressed: (){
-            AppRouterDelegate.of(context).push(name: '/test1');
+            AppRouterDelegate.of(context).push(pagesEnum: PagesEnum.test);
           },
         ),
         CupertinoButton(

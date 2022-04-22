@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_shop/routes/routes_model.dart';
 
 import 'routes_handle.dart';
 
 /// app顶层路由
-class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
-    with PopNavigatorRouterDelegateMixin<List<RouteSettings>>, ChangeNotifier {
+class AppRouterDelegate extends RouterDelegate<List<RouteInfo>>
+    with PopNavigatorRouterDelegateMixin<List<RouteInfo>>, ChangeNotifier {
   
   /// 路由列表
   final List<Page<dynamic>> _pages = [];
@@ -25,8 +26,14 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
   @override
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+
   @override
-  List<Page> get currentConfiguration => List.of(_pages);
+  List<RouteInfo> get currentConfiguration {
+    debugPrint('currentConfiguration');
+    return _pages
+        .map((page) => RouteInfo(pagesEnum: PagesEnum.values.byName(page.name!) ,arguments: page.arguments))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +47,15 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
 
 // 初始化路由
   @override
-  Future<void> setInitialRoutePath(List<RouteSettings> configuration) {
-    debugPrint('setInitialRoutePath: ${configuration.last.name}');
+  Future<void> setInitialRoutePath(List<RouteInfo> configuration) {
+    debugPrint('setInitialRoutePath: ${configuration.last.pagesEnum}');
     return setNewRoutePath(configuration);
   }
 
  @override
-  Future<void> setNewRoutePath(List<RouteSettings> configuration) {
+  Future<void> setNewRoutePath(List<RouteInfo> configuration) {
     _setPath(configuration
-        .map((routeSettings) => RouteHandle.createPage(routeSettings))
+        .map((routeInfo) => RouteHandle.createPage(routeInfo))
         .toList());
     return Future.value(null);
   }
@@ -82,7 +89,7 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
   bool _onPopPage(Route route, dynamic result) {
     debugPrint('_onPopPage: $route');
     if (!route.didPop(result)) return false;
-
+    // route.settings
     if (canPop()) {
       _pages.removeLast();
       return true;
@@ -92,9 +99,9 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
   }
 
   // 添加路由
-  void push({required String name, dynamic arguments}) {
-     debugPrint('push: $name');
-    _pages.add(RouteHandle.createPage(RouteSettings(name: name, arguments: arguments)));
+  void push({required PagesEnum pagesEnum, dynamic arguments}) {
+     debugPrint('push: $pagesEnum');
+    _pages.add(RouteHandle.createPage(RouteInfo(pagesEnum: pagesEnum, arguments: arguments)));
     notifyListeners();
   }
 
@@ -108,12 +115,12 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
   }
 
   /// 替换当前路由
-  void replace({required String name, dynamic arguments}) {
-    debugPrint('replace: $name');
+  void replace({required PagesEnum pagesEnum, dynamic arguments}) {
+    debugPrint('replace: $pagesEnum');
     if (_pages.isNotEmpty) {
       _pages.removeLast();
     }
-    push(name: name,arguments: arguments);
+    push(pagesEnum: pagesEnum,arguments: arguments);
   }
 
 
@@ -143,14 +150,14 @@ class AppRouterDelegate extends RouterDelegate<List<RouteSettings>>
 
 
 /// 路由url处理
-class AppRouteParser extends RouteInformationParser<List<RouteSettings>> {
+class AppRouteParser extends RouteInformationParser<List<RouteInfo>> {
 
   const AppRouteParser() : super();
 
 
   /// 路由初始入口 可以解析路由地址及参数 主要用于浏览器拼接路由url
   @override
-  Future<List<RouteSettings>> parseRouteInformation(
+  Future<List<RouteInfo>> parseRouteInformation(
       RouteInformation routeInformation) {
 
     final uri = Uri.parse(routeInformation.location!);
@@ -158,11 +165,11 @@ class AppRouteParser extends RouteInformationParser<List<RouteSettings>> {
 
     /// 默认斜杠/ 跳转到首页
     if (uri.pathSegments.isEmpty) {
-      return SynchronousFuture([const RouteSettings(name: '/index')]);
+      return SynchronousFuture([const RouteInfo(pagesEnum: PagesEnum.indexs)]);
     }
-
-    final routeSettings = uri.pathSegments.map((path) => RouteSettings(
-              name: '/$path',
+    
+    final routeSettings = uri.pathSegments.map((path) => RouteInfo(
+              pagesEnum: PagesEnum.values.byName(path),
               arguments: path == uri.pathSegments.last
                   ? uri.queryParameters
                   : null,
@@ -175,20 +182,20 @@ class AppRouteParser extends RouteInformationParser<List<RouteSettings>> {
 
   /// 路由返回 可解析路由地址及参数 主要用于浏览器url、参数
   @override
-  RouteInformation restoreRouteInformation(List<RouteSettings> configuration) {
+  RouteInformation restoreRouteInformation(List<RouteInfo> configuration) {
     debugPrint('restoreRouteInformation: $configuration');
     if (configuration.isEmpty) {
       return const RouteInformation(location: '/');
     }
-    final location = configuration.last.name;
+    final location = configuration.last.pagesEnum;
     final arguments = _restoreArguments(configuration.last);
 
     return RouteInformation(location: '$location$arguments');
   }
 
-  String _restoreArguments(RouteSettings routeSettings) {
-    if (routeSettings.name != '/details') return '';
-    var args = routeSettings.arguments as Map;
+  String _restoreArguments(RouteInfo routeInfo) {
+    if (routeInfo.pagesEnum != PagesEnum.goodsDetail) return '';
+    var args = routeInfo.arguments as Map;
 
     return '?name=${args['name']}&imgUrl=${args['imgUrl']}';
   }

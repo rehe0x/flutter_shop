@@ -1,8 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/page/search/search_model.dart';
+import 'package:flutter_shop/routes/routes_handle.dart';
+import 'package:flutter_shop/routes/routes_model.dart';
 import '../../common/screenutil/src/size_extension.dart';
 import '../../provider/app_global.dart';
 import '../../theme/themes.dart';
 import '../../widget/search_field.dart';
+
+///  搜索页统一头部变化
+class AppBarWidget extends StatefulWidget {
+  const AppBarWidget({ Key? key }) : super(key: key);
+
+  @override
+  State<AppBarWidget> createState() => _AppBarWidgetState();
+}
+
+class _AppBarWidgetState extends State<AppBarWidget> {
+
+  PagesEnum? _pagesEnum = PagesEnum.search;
+  @override
+  void initState() {
+    AppGlobal.eventBus.on<RouteInfo>().listen((routeInfo) {
+      debugPrint('_SearchState===${routeInfo.toString()}');
+      setState(() {
+        _pagesEnum = routeInfo.pagesEnum;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget appBarWidget;
+    switch (_pagesEnum) {
+      case PagesEnum.search:
+        appBarWidget = const SearchField(height: 40);
+        break;
+      case PagesEnum.goodsList:
+        appBarWidget = const SearchField(height: 40);
+        break;
+      case PagesEnum.goodsDetail:
+      appBarWidget = RepaintBoundary(
+          child: goodsDetailBar(context),
+        );
+        break;
+      default:
+        appBarWidget = const Text('null');
+    }
+    return appBarWidget;
+  }
+
+  Widget goodsDetailBar(BuildContext context) {
+    return Row(
+    children: [
+      Text('详情', style: AppThemes.of(context).textTheme.titleMedium,)
+    ],
+    );
+  } 
+}
 
 /// 搜索页 
 class Search extends StatelessWidget {
@@ -12,7 +67,7 @@ class Search extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppThemes.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const SearchField(height: 40, autofocus: true),
+        title: const AppBarWidget(),
         toolbarHeight: 45.h,
         backgroundColor: AppThemes.of(context).primaryBackgroundColor,
         elevation: 0.0,

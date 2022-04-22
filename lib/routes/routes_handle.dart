@@ -1,38 +1,49 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/page/goods/goods.dart';
+import 'package:flutter_shop/page/goods/goods_detail.dart';
+import 'package:flutter_shop/page/goods/goods_list.dart';
+import 'package:flutter_shop/page/goods/goods_model.dart';
+import 'package:flutter_shop/routes/routes_model.dart';
 
 import '../page/index.dart';
 import '../page/search/search_body.dart';
-import '../page/search/search_goods.dart';
 import '../page/splash/splash.dart';
+
+enum PagesEnum {
+  test,
+  splash,
+  indexs,
+  search,
+  goodsList,
+  goodsDetail,
+}
 
 /// 路由配置
 class RouteHandle{
 
 /// 创建路由页
-static Page createPage(RouteSettings routeSettings) {
-    debugPrint('_createPage$routeSettings');
+static Page createPage(RouteInfo routeInfo) {
+    debugPrint('_createPage$routeInfo');
     Widget child;
 
-    switch (routeSettings.name) {
-      case '/index':
+    switch (routeInfo.pagesEnum) {
+      case PagesEnum.indexs:
         child = const AppIndex();
         break;
-      case '/splash':
+      case PagesEnum.splash:
         child = const SplashPage();
         break;
-      case '/test1':
+      case PagesEnum.test:
         child = const SplashPage();
         break;
-      case '/search':
+      case PagesEnum.search:
         child = const SearchBody();
         break;
-      case '/search/goods':
-        child =  const SearchGoodsBody();
+      case PagesEnum.goodsList:
+        child =  const GoodsList();
         break;
-      case '/goods/detail':
-        child = GoodsDetail(routeSettings.arguments as Map<String, String>);
+      case PagesEnum.goodsDetail:
+        child = GoodsDetail(goodsArgument: routeInfo.arguments as GoodsArgument,);
         break;
       default:
         child = const Scaffold();
@@ -40,9 +51,9 @@ static Page createPage(RouteSettings routeSettings) {
 
     return CupertinoPage(
       child: child,
-      key: Key(routeSettings.name!) as LocalKey,
-      name: routeSettings.name,
-      arguments: routeSettings.arguments,
+      key: Key(routeInfo.pagesEnum.toString().split('.').last) as LocalKey,
+      name: routeInfo.pagesEnum.toString().split('.').last,
+      arguments: routeInfo.arguments,
     );
   }
 }

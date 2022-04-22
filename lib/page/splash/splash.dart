@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/routes/app_delegate.dart';
+import 'package:flutter_shop/routes/routes_handle.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({ Key? key }) : super(key: key);
@@ -20,7 +21,7 @@ class SplashPage extends StatelessWidget {
           CupertinoButton.filled(
             child: const Text('下一页'), 
             onPressed: (){
-              AppRouterDelegate.of(context).push(name: '/splash');
+              AppRouterDelegate.of(context).push(pagesEnum: PagesEnum.splash);
             }
           )
         ],

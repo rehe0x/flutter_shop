@@ -2,14 +2,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/provider/app_global.dart';
 import 'package:flutter_shop/routes/routes_handle.dart';
+import 'package:flutter_shop/routes/routes_model.dart';
 
 /// 搜索页路由器
-class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
-    with PopNavigatorRouterDelegateMixin<List<RouteSettings>>, ChangeNotifier {
+class SearchRouterDelegate extends RouterDelegate<List<RouteInfo>>
+    with PopNavigatorRouterDelegateMixin<List<RouteInfo>>, ChangeNotifier {
   
   /// 路由列表
-  final  List<Page<dynamic>> _pages = [RouteHandle.createPage(const RouteSettings(name: '/search',arguments: null))];
+  final  List<Page<dynamic>> _pages = [RouteHandle.createPage(const RouteInfo(pagesEnum: PagesEnum.search,arguments: null))];
 
   /// 获取路由代理对象
   static SearchRouterDelegate of(BuildContext context) {
@@ -22,7 +24,11 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-  List<Page> get currentConfiguration => List.of(_pages);
+  List<RouteInfo> get currentConfiguration {
+    return _pages
+        .map((page) => RouteInfo(pagesEnum: PagesEnum.values.byName(page.name!) ,arguments: page.arguments))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +42,10 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
   }
 
   // 添加路由
-  void push({required String name, dynamic arguments}) {
-     debugPrint('push: $name');
-    _pages.add(RouteHandle.createPage(RouteSettings(name: name, arguments: arguments)));
+  void push({required PagesEnum pagesEnum, dynamic arguments}) {
+     debugPrint('push: $pagesEnum');
+    _pages.add(RouteHandle.createPage(RouteInfo(pagesEnum: pagesEnum, arguments: arguments)));
+    AppGlobal.eventBus.fire(RouteInfo(pagesEnum: pagesEnum, arguments: arguments));
     notifyListeners();
   }
 
@@ -47,17 +54,18 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
     debugPrint('pop');
     if (_pages.isNotEmpty && _pages.length > 1) {
       _pages.remove(_pages.last);
+      AppGlobal.eventBus.fire(RouteInfo(pagesEnum: PagesEnum.values.byName(_pages.last.name!), arguments: _pages.last.arguments));
     }
     notifyListeners();
   }
 
   /// 替换当前路由
-  void replace({required String name, dynamic arguments}) {
-    debugPrint('replace: $name');
+  void replace({required PagesEnum pagesEnum, dynamic arguments}) {
+    debugPrint('replace: $pagesEnum');
     if (_pages.isNotEmpty) {
       _pages.removeLast();
     }
-    push(name: name,arguments: arguments);
+    push(pagesEnum: pagesEnum,arguments: arguments);
   }
 
   /// 获取最后页
@@ -66,7 +74,7 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
   }
 
  @override
-  Future<void> setNewRoutePath(List<RouteSettings> configuration) {
+  Future<void> setNewRoutePath(List<RouteInfo> configuration) {
     return Future.value(null);
   }
 
@@ -92,6 +100,7 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteSettings>>
 
     if (canPop()) {
       _pages.removeLast();
+      AppGlobal.eventBus.fire(RouteInfo(pagesEnum: PagesEnum.values.byName(_pages.last.name!), arguments: _pages.last.arguments));
       return true;
     } else {
       return false;
