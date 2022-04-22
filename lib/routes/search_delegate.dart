@@ -11,7 +11,7 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteInfo>>
     with PopNavigatorRouterDelegateMixin<List<RouteInfo>>, ChangeNotifier {
   
   /// 路由列表
-  final  List<Page<dynamic>> _pages = [RouteHandle.createPage(const RouteInfo(pagesEnum: PagesEnum.search,arguments: null))];
+  final  List<Page<dynamic>> _pages = [RouteHandle.createPage(const RouteInfo(name: RoutePages.search,arguments: null))];
 
   /// 获取路由代理对象
   static SearchRouterDelegate of(BuildContext context) {
@@ -26,7 +26,7 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteInfo>>
   @override
   List<RouteInfo> get currentConfiguration {
     return _pages
-        .map((page) => RouteInfo(pagesEnum: PagesEnum.values.byName(page.name!) ,arguments: page.arguments))
+        .map((page) => RouteInfo(name: page.name! ,arguments: page.arguments))
         .toList();
   }
 
@@ -42,10 +42,10 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteInfo>>
   }
 
   // 添加路由
-  void push({required PagesEnum pagesEnum, dynamic arguments}) {
-     debugPrint('push: $pagesEnum');
-    _pages.add(RouteHandle.createPage(RouteInfo(pagesEnum: pagesEnum, arguments: arguments)));
-    AppGlobal.eventBus.fire(RouteInfo(pagesEnum: pagesEnum, arguments: arguments));
+  void push({required String name, dynamic arguments}) {
+     debugPrint('push: $name');
+    _pages.add(RouteHandle.createPage(RouteInfo(name: name, arguments: arguments)));
+    AppGlobal.eventBus.fire(RouteInfo(name: name, arguments: arguments));
     notifyListeners();
   }
 
@@ -54,18 +54,18 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteInfo>>
     debugPrint('pop');
     if (_pages.isNotEmpty && _pages.length > 1) {
       _pages.remove(_pages.last);
-      AppGlobal.eventBus.fire(RouteInfo(pagesEnum: PagesEnum.values.byName(_pages.last.name!), arguments: _pages.last.arguments));
+      AppGlobal.eventBus.fire(RouteInfo(name: _pages.last.name!, arguments: _pages.last.arguments));
     }
     notifyListeners();
   }
 
   /// 替换当前路由
-  void replace({required PagesEnum pagesEnum, dynamic arguments}) {
-    debugPrint('replace: $pagesEnum');
+  void replace({required String name, dynamic arguments}) {
+    debugPrint('replace: $name');
     if (_pages.isNotEmpty) {
       _pages.removeLast();
     }
-    push(pagesEnum: pagesEnum,arguments: arguments);
+    push(name: name,arguments: arguments);
   }
 
   /// 获取最后页
@@ -100,7 +100,7 @@ class SearchRouterDelegate extends RouterDelegate<List<RouteInfo>>
 
     if (canPop()) {
       _pages.removeLast();
-      AppGlobal.eventBus.fire(RouteInfo(pagesEnum: PagesEnum.values.byName(_pages.last.name!), arguments: _pages.last.arguments));
+      AppGlobal.eventBus.fire(RouteInfo(name: _pages.last.name!, arguments: _pages.last.arguments));
       return true;
     } else {
       return false;

@@ -21,7 +21,7 @@ class SplashPage extends StatelessWidget {
           CupertinoButton.filled(
             child: const Text('下一页'), 
             onPressed: (){
-              AppRouterDelegate.of(context).push(pagesEnum: PagesEnum.splash);
+              AppRouterDelegate.of(context).push(name: RoutePages.splash);
             }
           )
         ],

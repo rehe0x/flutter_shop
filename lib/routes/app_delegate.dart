@@ -31,7 +31,7 @@ class AppRouterDelegate extends RouterDelegate<List<RouteInfo>>
   List<RouteInfo> get currentConfiguration {
     debugPrint('currentConfiguration');
     return _pages
-        .map((page) => RouteInfo(pagesEnum: PagesEnum.values.byName(page.name!) ,arguments: page.arguments))
+        .map((page) => RouteInfo(name: page.name! ,arguments: page.arguments))
         .toList();
   }
 
@@ -48,7 +48,7 @@ class AppRouterDelegate extends RouterDelegate<List<RouteInfo>>
 // 初始化路由
   @override
   Future<void> setInitialRoutePath(List<RouteInfo> configuration) {
-    debugPrint('setInitialRoutePath: ${configuration.last.pagesEnum}');
+    debugPrint('setInitialRoutePath: ${configuration.last.name}');
     return setNewRoutePath(configuration);
   }
 
@@ -99,9 +99,9 @@ class AppRouterDelegate extends RouterDelegate<List<RouteInfo>>
   }
 
   // 添加路由
-  void push({required PagesEnum pagesEnum, dynamic arguments}) {
-     debugPrint('push: $pagesEnum');
-    _pages.add(RouteHandle.createPage(RouteInfo(pagesEnum: pagesEnum, arguments: arguments)));
+  void push({required String name, dynamic arguments}) {
+     debugPrint('push: $name');
+    _pages.add(RouteHandle.createPage(RouteInfo(name: name, arguments: arguments)));
     notifyListeners();
   }
 
@@ -115,12 +115,12 @@ class AppRouterDelegate extends RouterDelegate<List<RouteInfo>>
   }
 
   /// 替换当前路由
-  void replace({required PagesEnum pagesEnum, dynamic arguments}) {
-    debugPrint('replace: $pagesEnum');
+  void replace({required String name, dynamic arguments}) {
+    debugPrint('replace: $name');
     if (_pages.isNotEmpty) {
       _pages.removeLast();
     }
-    push(pagesEnum: pagesEnum,arguments: arguments);
+    push(name: name,arguments: arguments);
   }
 
 
@@ -165,11 +165,11 @@ class AppRouteParser extends RouteInformationParser<List<RouteInfo>> {
 
     /// 默认斜杠/ 跳转到首页
     if (uri.pathSegments.isEmpty) {
-      return SynchronousFuture([const RouteInfo(pagesEnum: PagesEnum.indexs)]);
+      return SynchronousFuture([const RouteInfo(name: RoutePages.index)]);
     }
     
     final routeSettings = uri.pathSegments.map((path) => RouteInfo(
-              pagesEnum: PagesEnum.values.byName(path),
+              name: '/$path',
               arguments: path == uri.pathSegments.last
                   ? uri.queryParameters
                   : null,
@@ -187,14 +187,14 @@ class AppRouteParser extends RouteInformationParser<List<RouteInfo>> {
     if (configuration.isEmpty) {
       return const RouteInformation(location: '/');
     }
-    final location = configuration.last.pagesEnum;
+    final location = configuration.last.name;
     final arguments = _restoreArguments(configuration.last);
 
     return RouteInformation(location: '$location$arguments');
   }
 
   String _restoreArguments(RouteInfo routeInfo) {
-    if (routeInfo.pagesEnum != PagesEnum.goodsDetail) return '';
+    if (routeInfo.name != RoutePages.goodsDetail) return '';
     var args = routeInfo.arguments as Map;
 
     return '?name=${args['name']}&imgUrl=${args['imgUrl']}';

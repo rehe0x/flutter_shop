@@ -9,13 +9,13 @@ import '../page/index.dart';
 import '../page/search/search_body.dart';
 import '../page/splash/splash.dart';
 
-enum PagesEnum {
-  test,
-  splash,
-  indexs,
-  search,
-  goodsList,
-  goodsDetail,
+class RoutePages {
+  static const String test = '/test';
+  static const String splash = '/splash';
+  static const String index = '/index';
+  static const String search = '/search';
+  static const String goodsList = '/goods/list';
+  static const String goodsDetail = '/goods/detail';
 }
 
 /// 路由配置
@@ -26,23 +26,23 @@ static Page createPage(RouteInfo routeInfo) {
     debugPrint('_createPage$routeInfo');
     Widget child;
 
-    switch (routeInfo.pagesEnum) {
-      case PagesEnum.indexs:
+    switch (routeInfo.name) {
+      case RoutePages.index:
         child = const AppIndex();
         break;
-      case PagesEnum.splash:
+      case RoutePages.splash:
         child = const SplashPage();
         break;
-      case PagesEnum.test:
+      case RoutePages.test:
         child = const SplashPage();
         break;
-      case PagesEnum.search:
+      case RoutePages.search:
         child = const SearchBody();
         break;
-      case PagesEnum.goodsList:
+      case RoutePages.goodsList:
         child =  const GoodsList();
         break;
-      case PagesEnum.goodsDetail:
+      case RoutePages.goodsDetail:
         child = GoodsDetail(goodsArgument: routeInfo.arguments as GoodsArgument,);
         break;
       default:
@@ -51,8 +51,8 @@ static Page createPage(RouteInfo routeInfo) {
 
     return CupertinoPage(
       child: child,
-      key: Key(routeInfo.pagesEnum.toString().split('.').last) as LocalKey,
-      name: routeInfo.pagesEnum.toString().split('.').last,
+      key: Key(routeInfo.name) as LocalKey,
+      name: routeInfo.name,
       arguments: routeInfo.arguments,
     );
   }

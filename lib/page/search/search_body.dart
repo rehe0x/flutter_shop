@@ -60,7 +60,7 @@ class SearchBody extends StatelessWidget {
                   child: Text('水电费发水淀粉', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
                   onTap: (){
                     // Navigator.pushNamed(context, 'goods_item');
-                    SearchRouterDelegate.of(context).push(pagesEnum: PagesEnum.goodsList);
+                    SearchRouterDelegate.of(context).push(name: RoutePages.goodsList);
                   },
                 )
               ],

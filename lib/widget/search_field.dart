@@ -15,22 +15,17 @@ class SearchField extends StatefulWidget {
   final double? height;
   // 是否弹出键盘 首页不弹出
   final bool readOnly;
-  // // 是否默认打开焦点
-  // final bool autofocus;
 
   const SearchField({Key? key, this.width, this.height,
    this.readOnly = false, 
-  //  this.autofocus = false,
-    // this.onEditingComplete,
-   }) : super(key: key);
+  }) : super(key: key);
 
   @override
   State<SearchField> createState() => _SearchFieldState();
-
 }
 
 class _SearchFieldState extends State<SearchField> {
- /// 搜索点击跳转到搜索页
+  /// 搜索点击跳转到搜索页
   FocusNode searchFocusNode = AppGlobal.searchFocusNode;
   /// 搜索框文本处理
   TextEditingController searchTextEditingController = AppGlobal.searchTextEditingController;
@@ -43,11 +38,8 @@ class _SearchFieldState extends State<SearchField> {
       searchFocusNode = FocusNode();
       searchTextEditingController = TextEditingController();
     }
-    debugPrint('_SearchFieldState=初始化${searchFocusNode.hasListeners}');
-    // 搜索页键盘事件用Provider FocusNode 为了从首页点过去每次都获取焦点
-    if(!searchFocusNode.hasListeners){
-      _focusNodeAddListener();
-    } 
+    debugPrint('_SearchFieldState=初始化');
+    _focusNodeAddListener();
     super.initState();
     
   }
@@ -65,7 +57,7 @@ class _SearchFieldState extends State<SearchField> {
         AppGlobal.updateTabIndex(2);
       }
 
-      if (AppGlobal.searchRouterDelegate.lastPage().name == PagesEnum.goodsList.toString().split('.').last
+      if (AppGlobal.searchRouterDelegate.lastPage().name == RoutePages.goodsList.toString().split('.').last
           && searchFocusNode.hasFocus) {
         AppGlobal.searchRouterDelegate.pop();
       }
@@ -75,10 +67,8 @@ class _SearchFieldState extends State<SearchField> {
           _focus = searchFocusNode.hasFocus;
         });
       }
-      
     });
   }
-
 
   //获取上下焦点
   void getFocusFunction(BuildContext context){
@@ -92,14 +82,13 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   void dispose() {
+    /// 首页搜索框 用单独的 需要销毁
     if(widget.readOnly) {
       searchFocusNode.dispose();
       searchTextEditingController.dispose();
     }
     super.dispose();
-    
     debugPrint('_SearchFieldState=销毁');
-  
   }
 
 
@@ -107,12 +96,11 @@ class _SearchFieldState extends State<SearchField> {
     AppGlobal.searchFocusNode.unfocus();
     // 关闭键盘延迟一下 避免加载动画飘逸
     await Future.delayed(const Duration(milliseconds: 150));    
-    AppGlobal.searchRouterDelegate.push(pagesEnum: PagesEnum.goodsList);
+    AppGlobal.searchRouterDelegate.push(name: RoutePages.goodsList);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('_SearchFieldState=$_focus');
     final Container suffixIcon = Container(
         width: 20.w,
         height: 20.w,
@@ -139,7 +127,7 @@ class _SearchFieldState extends State<SearchField> {
               textAlignVertical: TextAlignVertical.bottom,
               // 不弹出键盘
               // readOnly: widget.readOnly,
-              // // 默认获取焦点
+              // 默认获取焦点
               // autofocus: widget.autofocus,
               // 显示焦点
               showCursor: true,

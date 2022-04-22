@@ -108,7 +108,7 @@ class _GoodsItem extends StatelessWidget {
       children:[
         InkWell(
           onTap: (){
-            SearchRouterDelegate.of(context).push(pagesEnum: PagesEnum.goodsDetail, arguments: GoodsArgument(goodsId: id));
+            SearchRouterDelegate.of(context).push(name: RoutePages.goodsDetail, arguments: GoodsArgument(goodsId: id));
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

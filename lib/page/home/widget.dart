@@ -95,7 +95,7 @@ class GroupHorizontalTitle extends StatelessWidget {
           minSize: 0,
           child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
           onPressed: (){
-            AppRouterDelegate.of(context).push(pagesEnum: PagesEnum.test);
+            AppRouterDelegate.of(context).push(name: RoutePages.test);
           },
         ),
         CupertinoButton(

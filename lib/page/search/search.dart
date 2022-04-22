@@ -17,13 +17,13 @@ class AppBarWidget extends StatefulWidget {
 
 class _AppBarWidgetState extends State<AppBarWidget> {
 
-  PagesEnum? _pagesEnum = PagesEnum.search;
+  String _routeName = RoutePages.search;
   @override
   void initState() {
     AppGlobal.eventBus.on<RouteInfo>().listen((routeInfo) {
       debugPrint('_SearchState===${routeInfo.toString()}');
       setState(() {
-        _pagesEnum = routeInfo.pagesEnum;
+        _routeName = routeInfo.name;
       });
     });
     super.initState();
@@ -32,14 +32,14 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     Widget appBarWidget;
-    switch (_pagesEnum) {
-      case PagesEnum.search:
+    switch (_routeName) {
+      case RoutePages.search:
         appBarWidget = const SearchField(height: 40);
         break;
-      case PagesEnum.goodsList:
+      case RoutePages.goodsList:
         appBarWidget = const SearchField(height: 40);
         break;
-      case PagesEnum.goodsDetail:
+      case RoutePages.goodsDetail:
       appBarWidget = RepaintBoundary(
           child: goodsDetailBar(context),
         );
