@@ -38,12 +38,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Shop',
       theme: ThemeData(
-        // backgroundColor: AppThemes.of(context).primaryBackgroundColor
-        // primaryColor: AppThemeProvider.testTheme.primaryColor,
-        // colorScheme: ThemeData().colorScheme.copyWith(
-        //   primary: AppThemes.of(context).primaryColor,
-        // ),
-      ),
+      // splashColor: Colors.transparent, // 点击时的高亮效果设置为透明
+      // highlightColor: Colors.transparent, // 长按时的扩散效果设置为透明
+    ),
       routerDelegate: appRouterDelegate,
       routeInformationParser: const AppRouteParser(),
     );

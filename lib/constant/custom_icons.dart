@@ -22,4 +22,6 @@ class CustomIcons {
   // 扫一扫
   static const IconData scan = IconData(0xe751, fontFamily: 'iconfont1');
 
+   // bak
+  static const IconData back = IconData(0xe74f, fontFamily: 'iconfont1');
 }

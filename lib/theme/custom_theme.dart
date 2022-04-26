@@ -20,6 +20,9 @@ class CustomTheme {
   /// 脚手架前景色 一般屏幕body
   final Color scaffoldAccentColor;
 
+  /// 分割线颜色
+  final Color divideColor;
+
   ///  底部导航默认颜色
   final Color bottomAppBarColor;
 
@@ -47,6 +50,7 @@ class CustomTheme {
     required Color primaryAccentColor,
     required Color scaffoldBackgroundColor,
     required Color scaffoldAccentColor,
+    required Color divideColor,
     required Color bottomAppBarColor,
     required Color primaryTextColor,
     required Color labelTextColor,
@@ -106,6 +110,7 @@ class CustomTheme {
       primaryAccentColor: primaryAccentColor,
       scaffoldBackgroundColor: scaffoldBackgroundColor,
       scaffoldAccentColor: scaffoldAccentColor,
+      divideColor: divideColor,
       bottomAppBarColor: bottomAppBarColor,
       primaryTextColor: primaryTextColor,
       labelTextColor: labelTextColor,
@@ -122,6 +127,7 @@ class CustomTheme {
     required this.primaryAccentColor,
     required this.scaffoldBackgroundColor,
     required this.scaffoldAccentColor, 
+    required this.divideColor,
     required this.bottomAppBarColor, 
     required this.primaryTextColor, 
     required this.labelTextColor, 

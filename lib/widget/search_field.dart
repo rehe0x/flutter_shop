@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_shop/routes/base_delegate.dart';
+import 'package:flutter_shop/routes/index_delegate.dart';
 import 'package:flutter_shop/routes/routes_handle.dart';
+import 'package:flutter_shop/routes/body_delegate.dart';
 import '../common/screenutil/src/size_extension.dart';
 
 
@@ -48,19 +51,30 @@ class _SearchFieldState extends State<SearchField> {
   _focusNodeAddListener(){
     searchFocusNode.addListener(() {
       // 点击首页搜索框切换到搜索页
-      if (searchFocusNode.hasFocus && AppGlobal.cupertinoTabController.index != 2) {
+      // if (searchFocusNode.hasFocus && AppGlobal.cupertinoTabController.index != 2) {
+      //   // 关闭首页键盘焦点
+      //   searchFocusNode.unfocus();
+      //   // 打开搜索页焦点
+      //   AppGlobal.updateSearchFocus(true);
+      //   // 跳转搜索页
+      //   AppGlobal.updateTabIndex(2);
+      // }
+
+      if (widget.readOnly) {
         // 关闭首页键盘焦点
         searchFocusNode.unfocus();
         // 打开搜索页焦点
         AppGlobal.updateSearchFocus(true);
         // 跳转搜索页
         AppGlobal.updateTabIndex(2);
-      }
 
-      if (AppGlobal.searchRouterDelegate.lastPage().name == RoutePages.goodsList.toString().split('.').last
-          && searchFocusNode.hasFocus) {
-        AppGlobal.searchRouterDelegate.pop();
+        RouteBaseDelegate.of<BodyRouterDelegate>(context)?.popLast();
+      } else {
+        if (searchFocusNode.hasFocus) {
+          RouteBaseDelegate.of<BodyRouterDelegate>(context)?.popLast();
+        }
       }
+      
       /// 在setState之前判断是否mounted（没有被销毁）
       if (mounted){
        setState(() {
@@ -96,7 +110,7 @@ class _SearchFieldState extends State<SearchField> {
     AppGlobal.searchFocusNode.unfocus();
     // 关闭键盘延迟一下 避免加载动画飘逸
     await Future.delayed(const Duration(milliseconds: 150));    
-    AppGlobal.searchRouterDelegate.push(name: RoutePages.goodsList);
+    RouteBaseDelegate.of<BodyRouterDelegate>(context)?.push(name: RoutePages.bodyGoods);
   }
 
   @override

@@ -169,3 +169,71 @@ class _CustomScrollFadePageState extends State<CustomScrollFadePage> {
     );
   }
 }
+
+
+/// 封装加载动画页面&下拉刷新
+class CustomScrollFadePage2 extends StatelessWidget {
+  /// 异步请求数据
+  final Future<void> Function() fetchData;
+  /// slivers 列表
+  final List<Widget> slivers;
+
+  const CustomScrollFadePage2({
+    Key? key,
+    required this.fetchData,
+    required this.slivers,
+  }) : super(key: key);
+
+  /// 流程控制 淡入效果
+  Stream<Widget> fetchStream() async* {
+    debugPrint('fetchStream');
+    await fetchData();
+      // yield Builder(builder: builder);
+      /// 暂时没用
+    yield const Text('加载中...');
+    /// 淡入效果延迟
+    await Future.delayed(const Duration(milliseconds: 100));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: fetchStream(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        debugPrint('snapshot=${snapshot.connectionState}');
+        debugPrint('snapshot=${snapshot.data}');
+
+        if ((snapshot.connectionState != ConnectionState.waiting)) {
+          return AnimatedOpacity(
+            duration:  const Duration(milliseconds: 300),
+            opacity: snapshot.connectionState == ConnectionState.done ? 1.0 : 0,
+            child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics()
+              ),
+              // physics: ClampingScrollPhysics(),
+              slivers: [
+                /// 下拉刷新组件 执行数据请求 不加载动画
+                ...slivers
+              ],
+            ),
+          );
+        }
+        /// 转圈动画
+        return Center(
+          child: SizedBox(
+            width: 50.r,
+            height: 50.r,
+            child: RingInsideLoading(
+              color: AppThemes.of(context).primaryColor,
+              backgroundColor: AppThemes.of(context).scaffoldAccentColor,
+              duration: const Duration(milliseconds: 800),
+              curve: Curves.linear,
+              strokeWidth: 3.r,
+            ),
+          ),
+        );
+      }
+    );
+  }
+}

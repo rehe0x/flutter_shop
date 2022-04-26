@@ -1,10 +1,21 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_shop/page/cart/11.dart';
+import 'package:flutter_shop/page/cart/cart.dart';
+import 'package:flutter_shop/page/cart/f.dart';
+import 'package:flutter_shop/page/cart/s.dart';
+import 'package:flutter_shop/routes/base_delegate.dart';
+import 'package:flutter_shop/routes/index_delegate.dart';
+import 'package:flutter_shop/routes/routes_handle.dart';
+import 'package:flutter_shop/routes/routes_model.dart';
 
 import '../common/screenutil/src/size_extension.dart';
 import '../common/screenutil/src/screen_util.dart';
 import '../provider/app_global.dart';
+import '../routes/body_delegate.dart';
 import 'home/home.dart';
 import 'search/search.dart';
 import '../theme/themes.dart';
@@ -25,7 +36,7 @@ class AppIndex extends StatelessWidget {
     const Home(title: 'Logo',),
     const Home(title: '精选'),
     const Search(),
-    const Home(title: '购物车'),
+     NestedScrollViewWidget(),
     const Home(title: '账户'),
   ];
   
@@ -49,6 +60,7 @@ class AppIndex extends StatelessWidget {
         )
       ),
       child: CupertinoTabScaffold(
+        
           controller: AppGlobal.cupertinoTabController,
           tabBar: CupertinoTabBar(
             backgroundColor: AppThemes.of(context).primaryBackgroundColor,
@@ -61,15 +73,61 @@ class AppIndex extends StatelessWidget {
             onTap: (int index){
               /// 如果是搜索页 默认打开搜索框焦点
               if (index == 2) {
-                AppGlobal.updateSearchFocus(true);
+                BodyRouterDelegate? routerDelegate = RouteBaseDelegate.of<BodyRouterDelegate>(context);
+                if (routerDelegate == null || !routerDelegate.canPop()) {
+                  AppGlobal.updateSearchFocus(true);
+                }
               }
             },
           ),
           tabBuilder: (BuildContext context, int index) {
             /// 问题 键盘弹出关闭 会执行很多次
             debugPrint('tabBuilder index: $index');
-            return _pages[index];
+            // return _pages[index];
+            return IndexRoute(index,);
           }
+      ),
+    );
+  }
+}
+
+
+/// 单列tab
+class IndexRoute extends StatelessWidget {
+
+  final int index;
+
+  static final Map<int, IndexRoute> _map= {};
+
+  const IndexRoute._(this.index ,{Key? key}) : super(key: key);
+
+  factory IndexRoute(int index) => _instance(index);
+
+  static IndexRoute _instance(int index){
+    if (!_map.containsKey(index)) {
+      _map[index] = IndexRoute._(index);
+    }
+    return _map[index]!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('${describeIdentity(this)}.$index');
+    RouteInfo routeInfo;
+    if(index == 0) {
+      routeInfo = const RouteInfo(name: RoutePages.indexHome);
+    }else if(index == 1) {
+      routeInfo = const RouteInfo(name: RoutePages.indexHome);
+    }else if(index == 2) {
+      routeInfo = const RouteInfo(name: RoutePages.indexSearch);
+    }else if(index == 3) {
+      routeInfo = const RouteInfo(name: RoutePages.indexHome);
+    }else{
+      routeInfo = const RouteInfo(name: RoutePages.indexHome);
+    }
+    return Scaffold(
+      body: Router(
+        routerDelegate: IndexRouterDelegate(initRoute: routeInfo),
       ),
     );
   }

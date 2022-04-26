@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_shop/routes/routes_handle.dart';
 
 class RouteInfo {
 

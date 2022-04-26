@@ -4,10 +4,13 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/common/widget_common.dart';
+import 'package:flutter_shop/constant/custom_icons.dart';
 import 'package:flutter_shop/page/goods/goods_model.dart';
 import 'package:flutter_shop/page/goods/goods_widget.dart';
+import 'package:flutter_shop/routes/base_delegate.dart';
+import 'package:flutter_shop/routes/index_delegate.dart';
 import 'package:flutter_shop/routes/routes_handle.dart';
-import 'package:flutter_shop/routes/search_delegate.dart';
+import 'package:flutter_shop/routes/body_delegate.dart';
 
 import '../../provider/app_global.dart';
 import '../../common/screenutil/flutter_screenutil.dart';
@@ -24,6 +27,7 @@ class GoodsList extends StatefulWidget {
 
 class _GoodsListState extends State<GoodsList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
 
   /// 订阅事件对象
   late final StreamSubscription _busSubscription;
@@ -59,7 +63,14 @@ class _GoodsListState extends State<GoodsList> {
         /// 头部条件过滤
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            const FilterHeadBar(),   
+            FilterHeadBar(
+              sortOnChanged: (value) {
+                AppGlobal.eventBus.fire(GoodsArgument(sort: value));
+              },
+              endDrawerChanged: (){
+                _scaffoldKey.currentState?.openEndDrawer();
+              },
+            ),   
           ];
         },
         /// 内容
@@ -73,7 +84,7 @@ class _GoodsListState extends State<GoodsList> {
           ],
         ),
       ),
-      endDrawer: const Drawer(child: Text('过滤条件'),),
+      endDrawer: FilterDrawer(),
       endDrawerEnableOpenDragGesture: false,
     );
   }
@@ -86,7 +97,7 @@ class _GoodsListState extends State<GoodsList> {
         },
         childCount: 60
       ),
-      itemExtent: 160.h,
+      itemExtent: 140.h,
     );
   }
 
@@ -98,19 +109,20 @@ class _GoodsListState extends State<GoodsList> {
   }
 
 }
+
 class _GoodsItem extends StatelessWidget {
   final int id;
   const _GoodsItem({required this.id, Key? key }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children:[
-        InkWell(
-          onTap: (){
-            SearchRouterDelegate.of(context).push(name: RoutePages.goodsDetail, arguments: GoodsArgument(goodsId: id));
-          },
-          child: Row(
+    return InkWell(
+      onTap: (){
+        RouteBaseDelegate.of<IndexRouterDelegate>(context)?.push(name: RoutePages.indexGoodsDetail, arguments: GoodsArgument(goodsId: id));
+      },
+      child: Column(
+        children:[
+          SizedBox(height: 15.h,),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(width: 5.w,),
@@ -134,38 +146,53 @@ class _GoodsItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppThemes.of(context).textTheme.titleSmall
                     ),
-                    Text(
-                      '测试｜不错｜22*333',
-                      style: AppThemes.of(context).textTheme.displayMedium,
-                    ),
+                  
                     Text(
                       '测试｜不错｜22*333',
                       style: AppThemes.of(context).textTheme.displayMedium,
                     ),
                   
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Text(
+                    //           '3322',
+                    //           style: AppThemes.of(context).textTheme.displayMedium,
+                    //         ),
+                    //         Text(
+                    //           '33342.44元',
+                    //           style: AppThemes.of(context).textTheme.titleSmall,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     // CupertinoButton(
+                    //     //   color: AppThemes.of(context).primaryColor,
+                    //     //   padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                    //     //   borderRadius: BorderRadius.circular(30.r),
+                    //     //   minSize: 35,
+                    //     //   child: Text('加入购物车', style: TextStyle(fontSize: 12, color: AppThemes.of(context).primaryAccentColor),),
+                    //     //   onPressed: (){},
+                    //     // ),
+
+                    //     Icon(CustomIcons.cartFill, color: AppThemes.of(context).primaryColor,),
+                    //     // SizedBox(width: 10.w,)
+                    //   ],
+                    // ),
+                    SizedBox(height: 20.h,),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '3322',
-                              style: AppThemes.of(context).textTheme.displayMedium,
-                            ),
-                            Text(
-                              '33342.44元',
-                              style: AppThemes.of(context).textTheme.titleSmall,
-                            ),
-                          ],
+                        Text(
+                          '33342.44元',
+                          style: AppThemes.of(context).textTheme.titleSmall,
                         ),
-                        CupertinoButton(
-                          color: AppThemes.of(context).primaryColor,
-                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                          minSize: 35,
-                          child: Text('加入购物车', style: TextStyle(fontSize: 12, color: AppThemes.of(context).primaryAccentColor),),
-                          onPressed: (){},
-                        ),
+              
+
+                        Icon(CustomIcons.cartFill, color: AppThemes.of(context).primaryColor,),
+                        // SizedBox(width: 10.w,)
                       ],
                     )
                   ],
@@ -173,11 +200,14 @@ class _GoodsItem extends StatelessWidget {
               )
             ],
           ),
-        ),
-        Divider(
-          color: AppThemes.of(context).scaffoldAccentColor,
-        )
-      ]
+          SizedBox(height: 15.h,),
+          Divider(
+            height: 0.h,
+            color: AppThemes.of(context).divideColor,
+          ),
+          // SizedBox(height: 15.h,),
+        ]
+      ),
     );
   }
 }

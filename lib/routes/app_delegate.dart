@@ -194,9 +194,9 @@ class AppRouteParser extends RouteInformationParser<List<RouteInfo>> {
   }
 
   String _restoreArguments(RouteInfo routeInfo) {
-    if (routeInfo.name != RoutePages.goodsDetail) return '';
-    var args = routeInfo.arguments as Map;
-
+    if (routeInfo.name != RoutePages.indexGoodsDetail) return '';
+    // var args = routeInfo.arguments as Map;
+    var args = Map();
     return '?name=${args['name']}&imgUrl=${args['imgUrl']}';
   }
 }

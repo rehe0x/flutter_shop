@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/routes/base_delegate.dart';
 import 'package:flutter_shop/routes/routes_handle.dart';
 import '../../common/screenutil/src/size_extension.dart';
-import '../../routes/search_delegate.dart';
+import '../../routes/body_delegate.dart';
 import '../../theme/themes.dart';
 
 /// 搜索页默认内容
@@ -59,8 +60,10 @@ class SearchBody extends StatelessWidget {
                 InkWell(
                   child: Text('水电费发水淀粉', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
                   onTap: (){
+                        RouteBaseDelegate.of<BodyRouterDelegate>(context)?.push(name: RoutePages.bodyGoods);
+
                     // Navigator.pushNamed(context, 'goods_item');
-                    SearchRouterDelegate.of(context).push(name: RoutePages.goodsList);
+                    // BodyRouterDelegate.of(context).push(name: RoutePages.goodsList);
                   },
                 )
               ],

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/page/goods/goods_model.dart';
+import 'package:flutter_shop/routes/base_delegate.dart';
+import 'package:flutter_shop/routes/index_delegate.dart';
 import 'package:flutter_shop/routes/routes_handle.dart';
 
 import '../../common/screenutil/src/size_extension.dart';
@@ -93,9 +96,19 @@ class GroupHorizontalTitle extends StatelessWidget {
         CupertinoButton(
           padding: const EdgeInsets.all(0),
           minSize: 0,
-          child: Text('查看全部', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+          child: Text('顶层路由', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
           onPressed: (){
-            AppRouterDelegate.of(context).push(name: RoutePages.test);
+            // AppRouterDelegate.of(context).push(name: RoutePages.test);
+            // RouteBaseDelegate.of<AppRouterDelegate>(context).push(name: RoutePages.test);
+            RouteBaseDelegate.of<AppRouterDelegate>(context)?.push(name: RoutePages.indexGoodsDetail, arguments: GoodsArgument(goodsId: 1));
+          },
+        ),
+        CupertinoButton(
+          padding: const EdgeInsets.all(0),
+          minSize: 0,
+          child: Text('二级路由', style: AppThemes.of(context).buttonTextTheme.buttonMedium,),
+          onPressed: (){
+            RouteBaseDelegate.of<IndexRouterDelegate>(context)?.push(name: RoutePages.indexGoodsDetail, arguments: GoodsArgument(goodsId: 1));
           },
         ),
         CupertinoButton(
