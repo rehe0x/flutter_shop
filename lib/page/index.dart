@@ -3,10 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/page/cart/11.dart';
 import 'package:flutter_shop/page/cart/cart.dart';
-import 'package:flutter_shop/page/cart/f.dart';
-import 'package:flutter_shop/page/cart/s.dart';
 import 'package:flutter_shop/routes/base_delegate.dart';
 import 'package:flutter_shop/routes/index_delegate.dart';
 import 'package:flutter_shop/routes/routes_handle.dart';
@@ -36,7 +33,7 @@ class AppIndex extends StatelessWidget {
     const Home(title: 'Logo',),
     const Home(title: '精选'),
     const Search(),
-     NestedScrollViewWidget(),
+    const Cart(),
     const Home(title: '账户'),
   ];
   
@@ -121,7 +118,7 @@ class IndexRoute extends StatelessWidget {
     }else if(index == 2) {
       routeInfo = const RouteInfo(name: RoutePages.indexSearch);
     }else if(index == 3) {
-      routeInfo = const RouteInfo(name: RoutePages.indexHome);
+      routeInfo = const RouteInfo(name: RoutePages.indexCart);
     }else{
       routeInfo = const RouteInfo(name: RoutePages.indexHome);
     }

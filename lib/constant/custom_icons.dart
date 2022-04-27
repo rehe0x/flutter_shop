@@ -24,4 +24,7 @@ class CustomIcons {
 
    // bak
   static const IconData back = IconData(0xe74f, fontFamily: 'iconfont1');
+
+  // +
+  static const IconData add = IconData(0xe6e0, fontFamily: 'iconfont1');
 }

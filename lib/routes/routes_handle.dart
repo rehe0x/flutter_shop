@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/page/cart/cart.dart';
 import 'package:flutter_shop/page/goods/goods_detail.dart';
 import 'package:flutter_shop/page/goods/goods_detail2.dart';
 import 'package:flutter_shop/page/goods/goods_list.dart';
@@ -21,6 +22,7 @@ class RoutePages {
   /// tab
   static const String indexHome = '/index/home';
   static const String indexSearch = '/index/search';
+  static const String indexCart = '/index/cart';
   static const String indexGoodsDetail = '/index/goods/detail';
 
   /// body
@@ -56,6 +58,9 @@ static Page createPage(RouteInfo routeInfo) {
         break;
       case RoutePages.indexSearch:
         child =  const Search();
+        break;
+      case RoutePages.indexCart:
+        child =  const Cart();
         break;
       case RoutePages.bodySearch:
         child = const SearchBody();

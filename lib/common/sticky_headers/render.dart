@@ -128,11 +128,13 @@ class RenderStickyHeader extends RenderBox
     }
   }
 
+    // RenderSliver? renderSliver  = _scrollPosition.context.findAncestorRenderObjectOfType<RenderSliver>();  
+
   double determineStuckOffset() {
     final scrollBox = _scrollPosition.context.notificationContext!.findRenderObject();
     if (scrollBox?.attached ?? false) {
       try {
-        return localToGlobal(Offset.zero, ancestor: scrollBox).dy;
+        return localToGlobal(Offset(0, 0), ancestor: scrollBox).dy;
       } catch (e) {
         // ignore and fall-through and return 0.0
       }
