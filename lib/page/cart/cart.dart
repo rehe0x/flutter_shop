@@ -27,6 +27,8 @@ class Cart extends StatelessWidget {
           
         ],
       ),
+    floatingActionButton: const CartFloatingAction(),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

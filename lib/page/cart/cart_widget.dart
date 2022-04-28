@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
 import 'package:flutter_shop/constant/custom_icons.dart';
 import 'package:flutter_shop/page/goods/goods_model.dart';
+import 'package:flutter_shop/routes/app_delegate.dart';
 import 'package:flutter_shop/routes/base_delegate.dart';
 import 'package:flutter_shop/routes/index_delegate.dart';
 import 'package:flutter_shop/routes/routes_handle.dart';
@@ -170,6 +172,66 @@ class CartGoodsItem extends StatelessWidget {
             SizedBox(height: 10.h,),
           ]
         ),
+      ),
+    );
+  }
+}
+
+
+class CartFloatingAction extends StatelessWidget {
+  const CartFloatingAction({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.h,
+      color: AppThemes.of(context).scaffoldAccentColor,
+      child: Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(width: 15.w,),
+          Radio(
+            value: 1, 
+            groupValue: 2, 
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            visualDensity: const VisualDensity(horizontal: -4,vertical: -4),
+            onChanged: (index){}
+          ),
+          SizedBox(width: 5.w,),
+          Text('全选', style: AppThemes.of(context).textTheme.titleSmall,),
+          SizedBox(width: 10.w,),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('合计:¥678.44', style: AppThemes.of(context).textTheme.titleSmall,),
+              Row(
+                children: [
+                  Text('优惠减:¥44.3', style: AppThemes.of(context).textTheme.displaySmall,),
+                  SizedBox(width:15.w,),
+                  Text('优惠明细', style: AppThemes.of(context).textTheme.displaySmall,),
+                ],
+              )
+            ],
+          ),
+          
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: CupertinoButton(
+                color: AppThemes.of(context).primaryColor,
+                padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 20).r,
+                borderRadius: BorderRadius.circular(30.r),
+                minSize: 0,
+                child: Text('去结算', style: TextStyle(fontSize: 14.sp, color: AppThemes.of(context).primaryAccentColor),),
+                onPressed: (){
+                  RouteBaseDelegate.of<AppRouterDelegate>(context)?.push(name: RoutePages.indexCartSettlement);
+                },
+              ),
+            ),
+          ),
+          SizedBox(width: 15.w,),
+        ],
       ),
     );
   }
