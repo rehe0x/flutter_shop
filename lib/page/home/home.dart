@@ -39,9 +39,9 @@ class _MyCustomScrollView extends StatelessWidget {
           backgroundColor: AppThemes.of(context).primaryBackgroundColor,
           elevation: 0.0,
           // appbar高度
-          toolbarHeight: 45.h,
+          toolbarHeight: 50.h,
           // 总高度 
-          expandedHeight: 85.h,
+          expandedHeight: 80.h,
           // 固定导航栏
           pinned: true,
           // 滑动一点导航栏就显示 否则滑倒最顶部
@@ -57,12 +57,13 @@ class _MyCustomScrollView extends StatelessWidget {
             centerTitle: true,
             titlePadding: EdgeInsets.only(bottom: 2.r, left: 15.r, right: 15.r),
             background: SafeArea(
-              // top: false,
-              // minimum: EdgeInsets.only(top: 44.h),
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: AppThemes.of(context).textTheme.titleLarge.copyWith(color: AppThemes.of(context).primaryColor)
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5).r,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: AppThemes.of(context).textTheme.titleMedium.copyWith(color: AppThemes.of(context).primaryColor)
+                ),
               ),
             ),
           ),

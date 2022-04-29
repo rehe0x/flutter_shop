@@ -17,7 +17,7 @@ class AppBarWidget  extends StatefulWidget implements PreferredSizeWidget {
   State<AppBarWidget> createState() => _AppBarWidgetState();
 
   @override
-  Size get preferredSize => Size(0, 45.h);
+  Size get preferredSize => Size(0, 50.h);
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {

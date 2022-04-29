@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/page/account/account.dart';
+import 'package:flutter_shop/page/activity/activity.dart';
 import 'package:flutter_shop/page/cart/cart.dart';
 import 'package:flutter_shop/page/cart/cart_settlement.dart';
 import 'package:flutter_shop/page/goods/goods_detail.dart';
@@ -22,14 +24,17 @@ class RoutePages {
   static const String index = '/index';
   /// tab
   static const String indexHome = '/index/home';
+  static const String indexActivity = '/index/activity';
   static const String indexSearch = '/index/search';
   static const String indexCart = '/index/cart';
   static const String indexCartSettlement = '/index/cart/settlement';
   static const String indexGoodsDetail = '/index/goods/detail';
-
+  static const String indexAccount = '/index/account';
   /// body
   static const String bodySearch = '/body/search';
   static const String bodyGoods = '/body/goods';
+
+  
 
   // static const String indexHome = '/index/home';
   // static const String indexHome = '/index/home';
@@ -58,11 +63,17 @@ static Page createPage(RouteInfo routeInfo) {
       case RoutePages.indexHome:
         child = const Home(title: 'Logo');
         break;
+      case RoutePages.indexActivity:
+        child = const Activity();
+        break;
       case RoutePages.indexSearch:
         child =  const Search();
         break;
       case RoutePages.indexCart:
         child =  const Cart();
+        break;
+      case RoutePages.indexAccount:
+        child =  const Account();
         break;
       case RoutePages.indexCartSettlement:
         child =  const CartSettlement();

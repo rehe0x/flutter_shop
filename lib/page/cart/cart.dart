@@ -37,9 +37,9 @@ class Cart extends StatelessWidget {
       backgroundColor: AppThemes.of(context).primaryBackgroundColor,
       elevation: 0.0,
       // appbar高度
-      toolbarHeight: 45.h,
+      toolbarHeight: 50.h,
       // 总高度 
-      expandedHeight: 90.h,
+      expandedHeight: 80.h,
       // 固定导航栏
       pinned: true,
       // 滑动一点导航栏就显示 否则滑倒最顶部
@@ -48,7 +48,7 @@ class Cart extends StatelessWidget {
         // 拉动伸缩比例
         expandedTitleScale: 1,
         centerTitle: true,
-        titlePadding: EdgeInsets.only(bottom: 15.r, left: 15.r, right: 15.r),
+        titlePadding: EdgeInsets.only(bottom: 10.r, left: 15.r, right: 15.r),
         title: Row(
           // mainAxisAlignment: MainAxisAlignment.end,
           // mainAxisSize: MainAxisSize.min,
@@ -71,12 +71,16 @@ class Cart extends StatelessWidget {
         ),
         
         background: SafeArea(
-          child: Text(
-            '购物车',
-            textAlign: TextAlign.center,
-            style: AppThemes.of(context).textTheme.titleLarge.copyWith(color: AppThemes.of(context).primaryColor)
+          child: Padding(
+            padding: const EdgeInsets.only(top: 5).r,
+            child: Text(
+              '购物车',
+              textAlign: TextAlign.center,
+              style: AppThemes.of(context).textTheme.titleMedium.copyWith(color: AppThemes.of(context).primaryColor)
+            ),
           ),
         ),
+      
       ),
     );
 

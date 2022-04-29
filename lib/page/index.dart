@@ -114,13 +114,13 @@ class IndexRoute extends StatelessWidget {
     if(index == 0) {
       routeInfo = const RouteInfo(name: RoutePages.indexHome);
     }else if(index == 1) {
-      routeInfo = const RouteInfo(name: RoutePages.indexHome);
+      routeInfo = const RouteInfo(name: RoutePages.indexActivity);
     }else if(index == 2) {
       routeInfo = const RouteInfo(name: RoutePages.indexSearch);
     }else if(index == 3) {
       routeInfo = const RouteInfo(name: RoutePages.indexCart);
     }else{
-      routeInfo = const RouteInfo(name: RoutePages.indexHome);
+      routeInfo = const RouteInfo(name: RoutePages.indexAccount);
     }
     return Scaffold(
       body: Router(
