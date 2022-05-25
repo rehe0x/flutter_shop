@@ -1,25 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/page/account/account.dart';
-import 'package:flutter_shop/page/activity/activity.dart';
-import 'package:flutter_shop/page/cart/cart.dart';
-import 'package:flutter_shop/page/cart/cart_settlement.dart';
-import 'package:flutter_shop/page/goods/goods_detail.dart';
-import 'package:flutter_shop/page/goods/goods_detail2.dart';
-import 'package:flutter_shop/page/goods/goods_list.dart';
-import 'package:flutter_shop/page/goods/goods_model.dart';
-import 'package:flutter_shop/page/home/home.dart';
-import 'package:flutter_shop/page/search/search.dart';
-import 'package:flutter_shop/routes/routes_model.dart';
 
+import 'routes_model.dart';
+import '../page/account/account.dart';
+import '../page/activity/activity.dart';
+import '../page/cart/cart.dart';
+import '../page/cart/cart_settlement.dart';
+import '../page/goods/goods_detail2.dart';
+import '../page/goods/goods_list.dart';
+import '../page/home/home.dart';
+import '../page/login/login.dart';
+import '../page/search/search.dart';
 import '../page/index.dart';
 import '../page/search/search_body.dart';
 import '../page/splash/splash.dart';
+
+enum Water {
+  frozen(32),
+  lukewarm(100),
+  boiling(212);
+
+  const Water(this.tempInFahrenheit);
+  final int tempInFahrenheit;
+}
 
 class RoutePages {
   /// app
   static const String test = '/test';
   static const String splash = '/splash';
+  static const String login = '/login';
+  static const String loginMobile = '/login/mobile';
   /// index
   static const String index = '/index';
   /// tab
@@ -56,6 +66,12 @@ static Page createPage(RouteInfo routeInfo) {
         break;
       case RoutePages.splash:
         child = const SplashPage();
+        break;
+      case RoutePages.login:
+        child = const Login();
+        break;
+      case RoutePages.loginMobile:
+        child =  LoginMobile();
         break;
       case RoutePages.index:
         child = const AppIndex();

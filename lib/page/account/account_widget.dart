@@ -2,7 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/common/screenutil/src/size_extension.dart';
 import 'package:flutter_shop/constant/custom_icons.dart';
+import 'package:flutter_shop/page/login/login.dart';
+import 'package:flutter_shop/routes/app_delegate.dart';
+import 'package:flutter_shop/routes/base_delegate.dart';
+import 'package:flutter_shop/routes/routes_handle.dart';
 import 'package:flutter_shop/theme/themes.dart';
+
+import '../../common/widget_common.dart';
 
 class AccountHead extends StatelessWidget {
   const AccountHead({ Key? key }) : super(key: key);
@@ -26,9 +32,22 @@ class AccountHead extends StatelessWidget {
               ),
             ),
             SizedBox(width: 15.w,),
-            Text('登录', style: AppThemes.of(context).textTheme.titleLarge,),
-            SizedBox(width: 10.w,),
-            Text('>', style: AppThemes.of(context).textTheme.labelLarge,),
+            GestureDetector(
+              onTap: (){
+                // RouteBaseDelegate.of<AppRouterDelegate>(context)!.push(name: RoutePages.login);
+                WidgetCommmon.showFullBottomSheet(
+                  context,
+                  builder: (context) => Login(),
+                );
+              },
+              child: Row(
+                children: [
+                  Text('登录', style: AppThemes.of(context).textTheme.titleLarge,),
+                  Icon(Icons.keyboard_arrow_right, size: 32.sp, color: AppThemes.of(context).primaryIconColor,),
+                ],
+              ),
+            ),
+          
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,

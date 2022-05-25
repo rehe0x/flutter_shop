@@ -46,7 +46,8 @@ class CartSettlement extends StatelessWidget {
                     SizedBox(height: 5.h,),
                   ],
                 ),
-                Text('>',style: AppThemes.of(context).textTheme.labelMedium)
+                // Text('>',style: AppThemes.of(context).textTheme.labelMedium)
+                Icon(Icons.keyboard_arrow_right, size: 32.sp, color: AppThemes.of(context).labelIconColor,)
               ],
             ),
           ),
@@ -244,7 +245,8 @@ class CartSettlementItem extends StatelessWidget {
                 children: [
                   Text('共',style: AppThemes.of(context).textTheme.labelMedium),
                   Text('2',style: AppThemes.of(context).textTheme.titleSmall),
-                  Text('件 >',style: AppThemes.of(context).textTheme.labelMedium),
+                  Text('件',style: AppThemes.of(context).textTheme.labelMedium),
+                  Icon(Icons.keyboard_arrow_right, size: 28.sp, color: AppThemes.of(context).labelIconColor,)
                 ],
               )
             ],
@@ -260,7 +262,12 @@ class CartSettlementItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('专用快递 >',style: AppThemes.of(context).textTheme.labelMedium),
+                  Row(
+                    children: [
+                      Text('专用快递',style: AppThemes.of(context).textTheme.labelMedium),
+                      Icon(Icons.keyboard_arrow_right, size: 24.sp, color: AppThemes.of(context).labelIconColor,)
+                    ],
+                  ),
                   Text('工作日、休息日均可送货',style: AppThemes.of(context).textTheme.labelMedium),
                 ],
               )

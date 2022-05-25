@@ -2,8 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/routes/routes_handle.dart';
-import 'package:flutter_shop/routes/routes_model.dart';
+
+import 'routes_handle.dart';
+import 'routes_model.dart';
 
 /// 二级路由
 class IndexRouterDelegate extends RouterDelegate<List<RouteInfo>>
